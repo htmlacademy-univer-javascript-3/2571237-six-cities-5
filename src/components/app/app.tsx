@@ -1,13 +1,10 @@
+import { ComponentProps } from 'react';
 import MainPage from '../../pages/main-page/main-page';
 
-type AppProps = {
-  foundPlacesInAmsterdamCount: number;
-}
-
-export default function App({foundPlacesInAmsterdamCount}: AppProps){
+export default function App({ cityPlacesCards }: ComponentProps<typeof MainPage>){
   return (
     <MainPage
-      foundPlacesInAmsterdamCount={foundPlacesInAmsterdamCount}
+      cityPlacesCards={cityPlacesCards}
     />
   );
 }

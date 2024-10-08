@@ -1,15 +1,10 @@
+import { ComponentProps } from 'react';
 import PlaceCardInfo from './place-card-info';
 
 type PlaceCardProps = {
   isPremium: boolean;
   imageSrc: string;
-  info: {
-    priceInEuro: number;
-    inBookmarks: boolean;
-    ratingInPercentage: number;
-    name: string;
-    type: string;
-  };
+  info: ComponentProps<typeof PlaceCardInfo>;
 }
 
 export default function PlaceCard({isPremium, imageSrc, info}: PlaceCardProps){
@@ -25,11 +20,7 @@ export default function PlaceCard({isPremium, imageSrc, info}: PlaceCardProps){
         </a>
       </div>
       <PlaceCardInfo
-        priceInEuro={info.priceInEuro}
-        inBookmarks={info.inBookmarks}
-        ratingInPercentage={info.ratingInPercentage}
-        name={info.name}
-        type={info.type}
+        {...info}
       />
     </article>
   );

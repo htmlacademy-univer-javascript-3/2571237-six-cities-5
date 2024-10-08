@@ -1,9 +1,11 @@
+import { PlaceType } from './constants/place-type';
+
 type PlaceCardInfoProps = {
   priceInEuro: number;
   inBookmarks: boolean;
   ratingInPercentage: number;
   name: string;
-  type: string;
+  type: PlaceType;
 }
 
 function GetBookmarksButtonClassName(placeCardInBookmarks: boolean){

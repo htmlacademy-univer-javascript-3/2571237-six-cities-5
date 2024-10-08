@@ -1,10 +1,11 @@
 import PlaceCard from './place-card';
+import { CityPlaceCard } from '../../components/app/city-place-card';
 
 type MainPageProps = {
-  foundPlacesInAmsterdamCount: number;
+  cityPlacesCards: Array<CityPlaceCard>;
 }
 
-export default function MainPage({foundPlacesInAmsterdamCount}: MainPageProps){
+export default function MainPage({ cityPlacesCards }: MainPageProps){
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -78,7 +79,7 @@ export default function MainPage({foundPlacesInAmsterdamCount}: MainPageProps){
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{foundPlacesInAmsterdamCount} places to stay in Amsterdam</b>
+              <b className="places__found">{cityPlacesCards.length} places to stay in Amsterdam</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -95,65 +96,11 @@ export default function MainPage({foundPlacesInAmsterdamCount}: MainPageProps){
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <PlaceCard
-                  isPremium
-                  imageSrc="../../markup/img/apartment-01.jpg"
-                  info={{
-                    priceInEuro: 120,
-                    inBookmarks: false,
-                    ratingInPercentage: 80,
-                    name: 'Beautiful & luxurious apartment at great location',
-                    type: 'Apartment'
-                  }}
-                />
-
-                <PlaceCard
-                  isPremium={false}
-                  imageSrc="../../markup/img/room.jpg"
-                  info={{
-                    priceInEuro: 80,
-                    inBookmarks: true,
-                    ratingInPercentage: 80,
-                    name: 'Wood and stone place',
-                    type: 'Room'
-                  }}
-                />
-
-                <PlaceCard
-                  isPremium={false}
-                  imageSrc="../../markup/img/apartment-02.jpg"
-                  info={{
-                    priceInEuro: 132,
-                    inBookmarks: false,
-                    ratingInPercentage: 80,
-                    name: 'Canal View Prinsengracht',
-                    type: 'Apartment'
-                  }}
-                />
-
-                <PlaceCard
-                  isPremium
-                  imageSrc="../../markup/img/apartment-03.jpg"
-                  info={{
-                    priceInEuro: 180,
-                    inBookmarks: false,
-                    ratingInPercentage: 100,
-                    name: 'Nice, cozy, warm big bed apartment',
-                    type: 'Apartment'
-                  }}
-                />
-
-                <PlaceCard
-                  isPremium={false}
-                  imageSrc="../../markup/img/room.jpg"
-                  info={{
-                    priceInEuro: 80,
-                    inBookmarks: true,
-                    ratingInPercentage: 80,
-                    name: 'Wood and stone place',
-                    type: 'Room'
-                  }}
-                />
+                {cityPlacesCards.map((placeCard) =>(
+                  <PlaceCard
+                    key={placeCard.id}
+                    {...placeCard.card}
+                  />))}
               </div>
             </section>
             <div className="cities__right-section">
