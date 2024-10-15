@@ -1,9 +1,13 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../components/common/app-route';
+import { Helmet } from 'react-helmet-async';
 
 export default function NotFoundPage() {
   return (
     <div className="page">
+      <Helmet>
+        <title>6 cities: not found</title>
+      </Helmet>
       <main className="page__main">
         <div className="container">
           <h1>404</h1>
