@@ -1,5 +1,5 @@
 import PlaceCard from './place-card';
-import { CityPlaceCard } from '../../components/app/city-place-card';
+import { CityPlaceCard } from '../../components/common/city-place-card';
 
 type MainPageProps = {
   cityPlacesCards: Array<CityPlaceCard>;
