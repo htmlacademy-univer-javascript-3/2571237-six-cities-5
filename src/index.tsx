@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
-import { PlaceType } from './pages/main-page/constants/place-type';
-import { CityPlaceCard } from './components/app/city-place-card';
+import { PlaceType } from './components/common/place-type';
+import { CityPlaceCard } from './components/common/city-place-card';
 
 const cityPlacesCards: Array<CityPlaceCard> = [
   {

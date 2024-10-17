@@ -1,4 +1,4 @@
-import { PlaceType } from './constants/place-type';
+import { PlaceType } from '../../components/common/place-type';
 
 type PlaceCardInfoProps = {
   priceInEuro: number;
@@ -8,7 +8,7 @@ type PlaceCardInfoProps = {
   type: PlaceType;
 }
 
-function GetBookmarksButtonClassName(placeCardInBookmarks: boolean){
+function getBookmarksButtonClassName(placeCardInBookmarks: boolean){
   let className = 'place-card__bookmark-button button';
   if (placeCardInBookmarks){
     className += ' place-card__bookmark-button--active';
@@ -26,7 +26,7 @@ export default function PlaceCardInfo(props: PlaceCardInfoProps){
           <span className="place-card__price-text">&#47;&nbsp;night</span>
         </div>
         <button
-          className={GetBookmarksButtonClassName(props.inBookmarks)}
+          className={getBookmarksButtonClassName(props.inBookmarks)}
           type="button"
         >
           <svg className="place-card__bookmark-icon" width="18" height="19">
