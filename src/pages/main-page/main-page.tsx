@@ -1,12 +1,12 @@
-import PlaceCard from './place-card';
-import { CityPlaceCard } from '../../components/common/city-place-card';
 import { Helmet } from 'react-helmet-async';
+import OffersList from '../../components/offers-list/offers-list';
+import { ComponentProps } from 'react';
+import HeaderLogo from '../../components/header-logo/header-logo';
+import OfferCard from '../../components/offer-card/offer-card';
+import { OfferCardType } from '../../constants/offer-card-type';
 
-type MainPageProps = {
-  cityPlacesCards: Array<CityPlaceCard>;
-}
 
-export default function MainPage({ cityPlacesCards }: MainPageProps){
+export default function MainPage({ offers }: ComponentProps<typeof OffersList>){
   return (
     <div className="page page--gray page--main">
       <Helmet>
@@ -16,9 +16,7 @@ export default function MainPage({ cityPlacesCards }: MainPageProps){
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <a className="header__logo-link header__logo-link--active">
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
-              </a>
+              <HeaderLogo />
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">
@@ -83,7 +81,7 @@ export default function MainPage({ cityPlacesCards }: MainPageProps){
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{cityPlacesCards.length} places to stay in Amsterdam</b>
+              <b className="places__found">{offers.length} places to stay in Amsterdam</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -100,10 +98,11 @@ export default function MainPage({ cityPlacesCards }: MainPageProps){
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {cityPlacesCards.map((placeCard) =>(
-                  <PlaceCard
-                    key={placeCard.id}
-                    {...placeCard.card}
+                {offers.map((offer) =>(
+                  <OfferCard
+                    key={offer.id}
+                    offer={offer}
+                    type={OfferCardType.MainPage}
                   />))}
               </div>
             </section>
