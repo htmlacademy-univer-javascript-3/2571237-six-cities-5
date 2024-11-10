@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Offer } from '../../types/offer';
+import { Offer } from '../../types/offer/offer';
 import { OfferCardType } from '../../constants/offer-card-type';
 import OfferCard from '../offer-card/offer-card';
 
@@ -10,7 +10,7 @@ type OffersListProps = {
 
 
 export default function OffersList({ offers }: OffersListProps) {
-  const [, setActiveOfferId] = useState(0);
+  const [, setActiveOfferId] = useState('');
 
   return (
     <div className="cities">
