@@ -9,12 +9,12 @@ import { OfferCardType } from '../../constants/offer-card-type';
 type OfferCardProps = {
   offer: Offer;
   type: OfferCardType;
-  onMouseEnter?: MouseEventHandler<HTMLElement>;
+  onCardHovered?: MouseEventHandler<HTMLElement>;
 }
 
-export default function OfferCard({offer, type, onMouseEnter}: OfferCardProps){
+export default function OfferCard({offer, type, onCardHovered}: OfferCardProps){
   return (
-    <article onMouseEnter={onMouseEnter}
+    <article onMouseEnter={onCardHovered}
       className={classNames('place-card', type === OfferCardType.FavoritesPage ? 'favorites__card' : 'cities__card')}
     >
       {offer.isPremium &&

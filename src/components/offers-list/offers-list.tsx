@@ -2,15 +2,16 @@ import { useState } from 'react';
 import { Offer } from '../../types/offer/offer';
 import { OfferCardType } from '../../constants/offer-card-type';
 import OfferCard from '../offer-card/offer-card';
-
+import { Map, MapPoint } from '../map/map';
 
 type OffersListProps = {
   offers: Offer[];
 }
 
-
 export default function OffersList({ offers }: OffersListProps) {
-  const [, setActiveOfferId] = useState('');
+  const [selectedOfferId, setSelectedOfferId] = useState('');
+  const city = offers[0].city;
+  const offersPoints = offers.map<MapPoint>((offer) => ({id: offer.id, ...offer.location}));
 
   return (
     <div className="cities">
@@ -39,12 +40,12 @@ export default function OffersList({ offers }: OffersListProps) {
                 key={offer.id}
                 offer={offer}
                 type={OfferCardType.MainPage}
-                onMouseEnter={() => setActiveOfferId(offer.id)}
+                onCardHovered={() => setSelectedOfferId(offer.id)}
               />))}
           </div>
         </section>
         <div className="cities__right-section">
-          <section className="cities__map map"></section>
+          <Map city={city} points={offersPoints} selectedPointId={selectedOfferId}/>
         </div>
       </div>
     </div>
