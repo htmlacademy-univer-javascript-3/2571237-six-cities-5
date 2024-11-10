@@ -1,5 +1,5 @@
 import { Helmet } from 'react-helmet-async';
-import { Offer } from '../../types/offer';
+import { Offer } from '../../types/offer/offer';
 import { OfferCardType } from '../../constants/offer-card-type';
 import OfferCard from '../../components/offer-card/offer-card';
 import HeaderLogo from '../../components/header-logo/header-logo';
@@ -58,7 +58,7 @@ export default function FavoritesPage({ offers }: FavoritesPageProps){
                 </div>
                 <div className="favorites__places">
                   {
-                    offers.filter((offer) => offer.placeCard.info.inFavorites)
+                    offers.filter((offer) => offer.isFavorite)
                       .map((offer) => (
                         <OfferCard
                           key={offer.id}

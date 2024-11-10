@@ -1,4 +1,4 @@
-export enum PlaceType {
+export enum OfferPlaceType {
   Apartment = 'Apartment',
   Room = 'Room'
 }
