@@ -2,6 +2,8 @@ import { OfferPlaceType } from '../../constants/offer-place-type';
 import { City } from './city';
 import { MapLocation } from './map-location';
 
+export type Offers = Offer[];
+
 export type Offer = {
   id: string;
   title: string;
