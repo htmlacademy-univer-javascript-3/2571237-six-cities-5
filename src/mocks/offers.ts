@@ -1,13 +1,14 @@
+import { CityName } from '../constants/city-name';
 import { OfferPlaceType } from '../constants/offer-place-type';
 import { City } from '../types/offer/city';
 import { Offer } from '../types/offer/offer';
 
 const amsterdam: City = {
-  name: 'Amsterdam',
+  name: CityName.Amsterdam,
   location: {
     latitude: 52.35514938496378,
     longitude: 4.673877537499948,
-    zoom: 8
+    zoom: 10
   }
 };
 
