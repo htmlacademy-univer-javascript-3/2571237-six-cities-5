@@ -1,5 +1,5 @@
 import { Helmet } from 'react-helmet-async';
-import HeaderLogo from '../../components/header-logo/header-logo';
+import HeaderBase from '../../components/header/header-base';
 
 export default function LoginPage(){
   return (
@@ -7,15 +7,7 @@ export default function LoginPage(){
       <Helmet>
         <title>6 cities - login</title>
       </Helmet>
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <HeaderLogo />
-            </div>
-          </div>
-        </div>
-      </header>
+      <HeaderBase/>
 
       <main className="page__main page__main--login">
         <div className="page__login-container container">
