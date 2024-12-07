@@ -8,18 +8,24 @@ import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
 import { AuthorizationStatus } from '../../constants/authorization-status';
 import { HelmetProvider } from 'react-helmet-async';
-import OffersList from '../offers-list/offers-list';
-import { ComponentProps } from 'react';
+import { useAppSelector } from '../../hooks';
+import Spinner from '../spinner/spinner';
 
 
-export default function App({ offers }: ComponentProps<typeof OffersList>){
+export default function App(){
+  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
+
+  if (isOffersDataLoading) {
+    return (<Spinner />);
+  }
+
   return (
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
           <Route
             path={AppRoute.Main}
-            element={<MainPage offers={offers} />}
+            element={<MainPage />}
           />
           <Route
             path={AppRoute.Login}
@@ -31,7 +37,7 @@ export default function App({ offers }: ComponentProps<typeof OffersList>){
               <PrivateRoute
                 authorizationStatus={AuthorizationStatus.Auth}
               >
-                <FavoritesPage offers={offers} />
+                <FavoritesPage />
               </PrivateRoute>
             }
           />
