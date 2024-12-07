@@ -8,9 +8,17 @@ import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
 import { AuthorizationStatus } from '../../constants/authorization-status';
 import { HelmetProvider } from 'react-helmet-async';
+import { useAppSelector } from '../../hooks';
+import Spinner from '../spinner/spinner';
 
 
 export default function App(){
+  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
+
+  if (isOffersDataLoading) {
+    return (<Spinner />);
+  }
+
   return (
     <HelmetProvider>
       <BrowserRouter>

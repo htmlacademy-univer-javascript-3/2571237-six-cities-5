@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
-import { AppRoute } from "../../constants/app-route";
-import { useAppSelector } from "../../store";
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../constants/app-route';
+import { useAppSelector } from '../../hooks';
 
 export default function HeaderNav() {
   const favoritesCount = useAppSelector((state) => state.offers).filter((offer) => offer.isFavorite).length;

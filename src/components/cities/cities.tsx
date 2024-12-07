@@ -1,9 +1,10 @@
 import classNames from 'classnames';
 import { CityName } from '../../constants/city-name';
-import { useAppDispatch, useAppSelector } from '../../store';
-import { changeCity } from '../../store/action';
+import { changeCity } from '../../store/actions';
 import OffersList from '../offers-list/offers-list';
 import EmptyOffersList from '../offers-list/empty-offers-list';
+import { Offers } from '../../types/offer/offer';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 
 const cities: CityName[] =
 [
@@ -15,9 +16,13 @@ const cities: CityName[] =
   CityName.Dusseldorf
 ];
 
+function getOffersFromCity(offers: Offers, city: CityName){
+  return offers.filter((offer) => offer.city.name === city);
+}
+
 export default function Cities(){
   const selectedCity = useAppSelector((state) => state.city);
-  const offers = useAppSelector((state) => state.offers).filter((offer) => offer.city.name === selectedCity);
+  const offers = useAppSelector((state) => getOffersFromCity(state.offers, selectedCity));
   const dispatch = useAppDispatch();
 
   return (
@@ -26,12 +31,12 @@ export default function Cities(){
       <div className="tabs">
         <section className="locations container">
           <ul className="locations__list tabs__list">
-            {cities.map((city) =>(
+            {cities.map((city) => (
               <li key={city} className="locations__item">
                 <a className={classNames('locations__item-link', 'tabs__item', city === selectedCity && 'tabs__item--active')}
                   href="#" onClick={(evt) => {
                     evt.preventDefault();
-                    dispatch(changeCity({city}));
+                    dispatch(changeCity(city));
                   }}
                 >
                   <span>{city}</span>

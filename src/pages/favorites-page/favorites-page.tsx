@@ -1,10 +1,10 @@
 import { Helmet } from 'react-helmet-async';
 import { OfferCardType } from '../../constants/offer-card-type';
 import OfferCard from '../../components/offer-card/offer-card';
-import { useAppSelector } from '../../store';
 import HeaderBase from '../../components/header/header-base';
 import HeaderNav from '../../components/header/header-nav';
 import { Offer } from '../../types/offer/offer';
+import { useAppSelector } from '../../hooks';
 
 function getFavoriteOffers(offers: Offer[]){
   return offers.filter((offer) => offer.isFavorite);
