@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import MainPage from '../../pages/main-page/main-page';
 import { AppRoute } from '../../constants/app-route';
 import LoginPage from '../../pages/login-page/login-page';
@@ -6,10 +6,11 @@ import FavoritesPage from '../../pages/favorites-page/favorites-page';
 import OfferPage from '../../pages/offer-page/offer-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
-import { AuthorizationStatus } from '../../constants/authorization-status';
 import { HelmetProvider } from 'react-helmet-async';
 import { useAppSelector } from '../../hooks';
 import Spinner from '../spinner/spinner';
+import HistoryRouter from '../history-router/history-router';
+import browserHistory from '../../common/browser-history';
 
 
 export default function App(){
@@ -21,7 +22,7 @@ export default function App(){
 
   return (
     <HelmetProvider>
-      <BrowserRouter>
+      <HistoryRouter history={browserHistory}>
         <Routes>
           <Route
             path={AppRoute.Main}
@@ -34,9 +35,7 @@ export default function App(){
           <Route
             path={AppRoute.Favorites}
             element={
-              <PrivateRoute
-                authorizationStatus={AuthorizationStatus.Auth}
-              >
+              <PrivateRoute>
                 <FavoritesPage />
               </PrivateRoute>
             }
@@ -50,7 +49,7 @@ export default function App(){
             element={<NotFoundPage />}
           />
         </Routes>
-      </BrowserRouter>
+      </HistoryRouter>
     </HelmetProvider>
   );
 }

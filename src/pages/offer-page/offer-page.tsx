@@ -1,7 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import ReviewForm from '../../components/review-form/review-form';
-import HeaderBase from '../../components/header/header-base';
-import HeaderNav from '../../components/header/header-nav';
+import Header from '../../components/header/header';
 
 export default function OfferPage(){
   return (
@@ -9,9 +8,7 @@ export default function OfferPage(){
       <Helmet>
         <title>6 cities - offer</title>
       </Helmet>
-      <HeaderBase>
-        <HeaderNav/>
-      </HeaderBase>
+      <Header/>
 
       <main className="page__main page__main--offer">
         <section className="offer">

@@ -1,7 +1,22 @@
 import { Helmet } from 'react-helmet-async';
 import HeaderBase from '../../components/header/header-base';
+import { FormEvent } from 'react';
+import { loginAction } from '../../store/api-actions';
+import { useAppDispatch } from '../../hooks';
 
 export default function LoginPage(){
+  const dispatch = useAppDispatch();
+
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    const formData = new FormData(evt.currentTarget);
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
+    if (email && password){
+      dispatch(loginAction({login: email, password}));
+    }
+  };
+
   return (
     <div className="page page--gray page--login">
       <Helmet>
@@ -13,7 +28,7 @@ export default function LoginPage(){
         <div className="page__login-container container">
           <section className="login">
             <h1 className="login__title">Sign in</h1>
-            <form className="login__form form" action="#" method="post">
+            <form className="login__form form" action="#" method="post" onSubmit={handleSubmit}>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
                 <input className="login__input form__input" type="email" name="email" placeholder="Email" required/>

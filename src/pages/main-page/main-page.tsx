@@ -1,7 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import Cities from '../../components/cities/cities';
-import HeaderBase from '../../components/header/header-base';
-import HeaderNav from '../../components/header/header-nav';
+import Header from '../../components/header/header';
 
 
 export default function MainPage(){
@@ -10,9 +9,7 @@ export default function MainPage(){
       <Helmet>
         <title>6 cities</title>
       </Helmet>
-      <HeaderBase>
-        <HeaderNav/>
-      </HeaderBase>
+      <Header/>
 
       <main className="page__main page__main--index">
         <Cities/>
