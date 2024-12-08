@@ -31,9 +31,8 @@ export default function ReviewForm() {
       <textarea className="reviews__textarea form__textarea" id="review" name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={fieldChangedHandler}
-      >
-        {formData.review}
-      </textarea>
+        defaultValue={formData.review}
+      />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set

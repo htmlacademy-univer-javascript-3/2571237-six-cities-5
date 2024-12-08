@@ -3,15 +3,20 @@ import { AppDispatch, State } from '../types/app-state';
 import { AxiosInstance } from 'axios';
 import { APIRoute } from '../constants/api-route';
 import { Offers } from '../types/offer/offer';
-import { loadOffers, setOffersDataLoadingStatus } from './actions';
+import { loadOffers, redirectToRoute, setAuthorizationStatus, setOffersDataLoadingStatus } from './actions';
+import { AuthorizationStatus } from '../constants/authorization-status';
+import { AuthData } from '../types/authorization/auth-data';
+import { UserData } from '../types/authorization/user-data';
+import { dropToken, saveToken } from '../services/token';
+import { AppRoute } from '../constants/app-route';
 
-type ThunkConfig = {
+type ThunkApiConfig = {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 };
 
-const fetchOffersAction = createAsyncThunk<void, undefined, ThunkConfig>(
+export const fetchOffersAction = createAsyncThunk<void, undefined, ThunkApiConfig>(
   'data/fetchOffers',
   async (_arg, { dispatch, extra: api }) => {
     dispatch(setOffersDataLoadingStatus(true));
@@ -21,4 +26,33 @@ const fetchOffersAction = createAsyncThunk<void, undefined, ThunkConfig>(
   }
 );
 
-export { fetchOffersAction };
+export const checkAuthAction = createAsyncThunk<void, undefined, ThunkApiConfig>(
+  'user/checkAuth',
+  async (_arg, {dispatch, extra: api}) => {
+    try {
+      await api.get(APIRoute.Login);
+      dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
+    } catch {
+      dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
+    }
+  }
+);
+
+export const loginAction = createAsyncThunk<void, AuthData, ThunkApiConfig>(
+  'user/login',
+  async ({login: email, password}, {dispatch, extra: api}) => {
+    const {data: {token}} = await api.post<UserData>(APIRoute.Login, {email, password});
+    saveToken(token);
+    dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
+    dispatch(redirectToRoute(AppRoute.Main));
+  }
+);
+
+export const logoutAction = createAsyncThunk<void, undefined, ThunkApiConfig>(
+  'user/logout',
+  async (_arg, {dispatch, extra: api}) => {
+    await api.delete(APIRoute.Logout);
+    dropToken();
+    dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
+  }
+);
