@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
-import { AppRoute } from "../../constants/app-route";
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../constants/app-route';
 
 export default function HeaderNav() {
   return (

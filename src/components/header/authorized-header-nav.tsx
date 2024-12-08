@@ -2,8 +2,6 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../constants/app-route';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { Offers } from '../../types/offer/offer';
-import { setAuthorizationStatus } from '../../store/actions';
-import { AuthorizationStatus } from '../../constants/authorization-status';
 import { logoutAction } from '../../store/api-actions';
 import { MouseEventHandler } from 'react';
 

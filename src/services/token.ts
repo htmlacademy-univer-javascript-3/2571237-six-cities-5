@@ -1,4 +1,4 @@
-import { Token } from "../types/authorization/user-data";
+import { Token } from '../types/authorization/user-data';
 
 const AUTH_TOKEN_KEY_NAME = 'six-cities-token';
 
