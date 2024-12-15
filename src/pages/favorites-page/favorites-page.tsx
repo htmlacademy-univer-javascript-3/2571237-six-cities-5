@@ -4,6 +4,7 @@ import OfferCard from '../../components/offer-card/offer-card';
 import { Offer } from '../../types/offer/offer';
 import { useAppSelector } from '../../hooks';
 import Header from '../../components/header/header';
+import Footer from '../../components/footer/footer';
 
 function getFavoriteOffers(offers: Offer[]){
   return offers.filter((offer) => offer.isFavorite);
@@ -16,7 +17,7 @@ export default function FavoritesPage(){
       <Helmet>
         <title>6 cities - favorites</title>
       </Helmet>
-      <Header/>
+      <Header />
 
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
@@ -93,11 +94,7 @@ export default function FavoritesPage(){
           </section>
         </div>
       </main>
-      <footer className="footer container">
-        <a className="footer__logo-link" href="main.html">
-          <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33"/>
-        </a>
-      </footer>
+      <Footer />
     </div>
   );
 }

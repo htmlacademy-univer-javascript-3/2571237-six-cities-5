@@ -5,6 +5,8 @@ import OffersList from '../offers-list/offers-list';
 import EmptyOffersList from '../offers-list/empty-offers-list';
 import { Offers } from '../../types/offer/offer';
 import { useAppDispatch, useAppSelector } from '../../hooks';
+import { createSelector } from '@reduxjs/toolkit';
+import { State } from '../../types/app-state';
 
 const cities: CityName[] =
 [
@@ -16,13 +18,15 @@ const cities: CityName[] =
   CityName.Dusseldorf
 ];
 
-function getOffersFromCity(offers: Offers, city: CityName){
+function getOffersInCity(offers: Offers, city: CityName){
   return offers.filter((offer) => offer.city.name === city);
 }
 
+const selectOffersInCity = createSelector([(state: State) => state.offers, (state: State) => state.city], getOffersInCity);
+
 export default function Cities(){
   const selectedCity = useAppSelector((state) => state.city);
-  const offers = useAppSelector((state) => getOffersFromCity(state.offers, selectedCity));
+  const offers = useAppSelector((state) => selectOffersInCity(state));
   const dispatch = useAppDispatch();
 
   return (
