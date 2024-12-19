@@ -1,10 +1,11 @@
 import { OfferPlaceType } from '../../constants/offer-place-type';
+import { UserData } from '../authorization/user-data';
 import { City } from './city';
 import { MapLocation } from './map-location';
 
-export type Offers = Offer[];
+export type PreviewOffers = PreviewOffer[];
 
-export type Offer = {
+export type PreviewOffer = {
   id: string;
   title: string;
   type: OfferPlaceType;
@@ -15,4 +16,13 @@ export type Offer = {
   isPremium: boolean;
   rating: number;
   previewImage: string;
-}
+};
+
+export type Offer = Omit<PreviewOffer, 'previewImage'> & {
+  description: string;
+  bedrooms: number;
+  goods: string[];
+  host: Omit<UserData, 'email' | 'token'>;
+  images: string[];
+  maxAdults: number;
+};

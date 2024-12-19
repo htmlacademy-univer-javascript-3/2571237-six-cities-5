@@ -1,13 +1,13 @@
 import { MouseEventHandler } from 'react';
 import classNames from 'classnames';
-import { Offer } from '../../types/offer/offer';
+import { PreviewOffer } from '../../types/offer/offer';
 import { AppRoute } from '../../constants/app-route';
 import { Link } from 'react-router-dom';
 import { offerPreviewImageSizes } from './offer-preview-image-size';
 import { OfferCardType } from '../../constants/offer-card-type';
 
 type OfferCardProps = {
-  offer: Offer;
+  offer: PreviewOffer;
   type: OfferCardType;
   onCardHovered?: MouseEventHandler<HTMLElement>;
 }

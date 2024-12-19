@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../constants/app-route';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { Offers } from '../../types/offer/offer';
 import { logoutAction } from '../../store/api-actions';
 import { MouseEventHandler } from 'react';
+import { PreviewOffers } from '../../types/offer/offer';
 
-function getFavoriteOffersCount(offers: Offers){
+function getFavoriteOffersCount(offers: PreviewOffers){
   return offers.filter((offer) => offer.isFavorite).length;
 }
 

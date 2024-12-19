@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { Offer } from '../../types/offer/offer';
+import { PreviewOffers } from '../../types/offer/offer';
 import { OfferCardType } from '../../constants/offer-card-type';
 import OfferCard from '../offer-card/offer-card';
 import { Map, MapPoint } from '../map/map';
 
 type OffersListProps = {
-  offers: Offer[];
+  offers: PreviewOffers;
 }
 
 export default function OffersList({ offers }: OffersListProps) {
