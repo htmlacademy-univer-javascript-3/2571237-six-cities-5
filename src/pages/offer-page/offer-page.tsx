@@ -170,9 +170,9 @@ export default function OfferPage() {
               </section>
             </div>
           </div>
-          <section className="offer__map map">
-            <Map block={MapBlock.Offer} city={offer.city} points={[{id: offer.id, ...offer.location}]} selectedPointId={offer.id}/>
-          </section>
+          <div className="container">
+            <Map block={MapBlock.Offer} city={offer.city} points={[{id: offer.id, ...offer.location}]} selectedPointId={offer.id} />
+          </div>
         </section>
         <div className="container">
           <section className="near-places places">
