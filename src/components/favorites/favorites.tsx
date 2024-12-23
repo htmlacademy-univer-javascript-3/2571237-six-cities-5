@@ -1,4 +1,4 @@
-import { OfferCardType } from '../../constants/offer-card-type';
+import { OfferCardBlock } from '../../constants/offer-card-block';
 import { PreviewOffers } from '../../types/offer/offer';
 import OfferCard from '../offer-card/offer-card';
 
@@ -28,7 +28,7 @@ export default function Favorites({ favoriteOffers }: FavoritesProps) {
           <h1 className="favorites__title">Saved listing</h1>
           <ul className="favorites__list">
             {Object.entries(favoriteOffersByCity).map(([city, favorites]) => (
-              <li className="favorites__locations-items">
+              <li key={city} className="favorites__locations-items">
                 <div className="favorites__locations locations locations--current">
                   <div className="locations__item">
                     <a className="locations__item-link" href="#">
@@ -40,8 +40,8 @@ export default function Favorites({ favoriteOffers }: FavoritesProps) {
                   {favorites.map((offer) => (
                     <OfferCard
                       key={offer.id}
+                      block={OfferCardBlock.Favorites}
                       offer={offer}
-                      type={OfferCardType.FavoritesPage}
                     />
                   ))}
                 </div>

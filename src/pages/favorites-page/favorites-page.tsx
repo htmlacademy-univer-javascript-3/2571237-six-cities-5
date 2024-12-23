@@ -22,7 +22,7 @@ export default function FavoritesPage() {
       </Helmet>
       <Header />
 
-      {favoriteOffers.length == 0 ? (
+      {favoriteOffers.length === 0 ? (
         <FavoritesEmpty />
       ) : (
         <Favorites favoriteOffers={favoriteOffers} />

@@ -1,5 +1,5 @@
 import { OfferPlaceType } from '../../constants/offer-place-type';
-import { UserData } from '../authorization/user-data';
+import { UserData } from '../user-data';
 import { City } from './city';
 import { MapLocation } from './map-location';
 
@@ -22,7 +22,7 @@ export type Offer = Omit<PreviewOffer, 'previewImage'> & {
   description: string;
   bedrooms: number;
   goods: string[];
-  host: Omit<UserData, 'email' | 'token'>;
+  host: UserData;
   images: string[];
   maxAdults: number;
 };

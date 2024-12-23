@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { PreviewOffers } from '../../types/offer/offer';
-import { OfferCardType } from '../../constants/offer-card-type';
 import OfferCard from '../offer-card/offer-card';
-import { Map, MapPoint } from '../map/map';
+import { Map } from '../map/map';
+import { MapPoint } from '../../types/map-point';
+import { MapBlock } from '../../constants/map-block';
+import { OfferCardBlock } from '../../constants/offer-card-block';
 
 type OffersListProps = {
   offers: PreviewOffers;
@@ -37,15 +39,15 @@ export default function OffersList({ offers }: OffersListProps) {
           <div className="cities__places-list places__list tabs__content">
             {offers.map((offer) =>(
               <OfferCard
+                block={OfferCardBlock.Cities}
                 key={offer.id}
                 offer={offer}
-                type={OfferCardType.MainPage}
                 onCardHovered={() => setSelectedOfferId(offer.id)}
               />))}
           </div>
         </section>
         <div className="cities__right-section">
-          <Map city={city} points={offersPoints} selectedPointId={selectedOfferId}/>
+          <Map block={MapBlock.Cities} city={city} points={offersPoints} selectedPointId={selectedOfferId}/>
         </div>
       </div>
     </div>

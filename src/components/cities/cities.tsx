@@ -3,10 +3,10 @@ import { CityName } from '../../constants/city-name';
 import { changeCity } from '../../store/actions';
 import OffersList from '../offers-list/offers-list';
 import EmptyOffersList from '../offers-list/empty-offers-list';
-import { Offers } from '../../types/offer/offer';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { createSelector } from '@reduxjs/toolkit';
 import { State } from '../../types/app-state';
+import { PreviewOffers } from '../../types/offer/offer';
 
 const cities: CityName[] =
 [
@@ -18,7 +18,7 @@ const cities: CityName[] =
   CityName.Dusseldorf
 ];
 
-function getOffersInCity(offers: Offers, city: CityName){
+function getOffersInCity(offers: PreviewOffers, city: CityName){
   return offers.filter((offer) => offer.city.name === city);
 }
 
