@@ -1,37 +1,43 @@
 import { MouseEventHandler } from 'react';
 import classNames from 'classnames';
-import { Offer } from '../../types/offer/offer';
+import { PreviewOffer } from '../../types/offer/offer';
 import { AppRoute } from '../../constants/app-route';
 import { Link } from 'react-router-dom';
 import { offerPreviewImageSizes } from './offer-preview-image-size';
-import { OfferCardType } from '../../constants/offer-card-type';
+import { OfferCardBlock } from '../../constants/offer-card-block';
 
 type OfferCardProps = {
-  offer: Offer;
-  type: OfferCardType;
+  block: OfferCardBlock;
+  offer: PreviewOffer;
   onCardHovered?: MouseEventHandler<HTMLElement>;
-}
+};
 
-export default function OfferCard({offer, type, onCardHovered}: OfferCardProps){
+export default function OfferCard({
+  block,
+  offer,
+  onCardHovered,
+}: OfferCardProps) {
   return (
-    <article onMouseEnter={onCardHovered}
-      className={classNames('place-card', type === OfferCardType.FavoritesPage ? 'favorites__card' : 'cities__card')}
+    <article
+      onMouseEnter={onCardHovered}
+      className={classNames('place-card', `${block}__card`)}
     >
-      {offer.isPremium &&
+      {offer.isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
-        </div>}
+        </div>
+      )}
       <div
-        className={
-          classNames('place-card__image-wrapper',
-            type === OfferCardType.FavoritesPage ? 'favorites__image-wrapper' : 'cities__image-wrapper')
-        }
+        className={classNames(
+          'place-card__image-wrapper',
+          `${block}__image-wrapper`
+        )}
       >
         <Link to={`${AppRoute.Offer}/${offer.id}`}>
           <img
             className="place-card__image"
             src={offer.previewImage}
-            {...offerPreviewImageSizes[type]}
+            {...offerPreviewImageSizes[block]}
             alt="Place image"
           />
         </Link>
@@ -43,18 +49,24 @@ export default function OfferCard({offer, type, onCardHovered}: OfferCardProps){
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button
-            className={classNames('place-card__bookmark-button', offer.isFavorite && 'place-card__bookmark-button--active', 'button')}
+            className={classNames(
+              'place-card__bookmark-button',
+              offer.isFavorite && 'place-card__bookmark-button--active',
+              'button'
+            )}
             type="button"
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
-            <span className="visually-hidden">{offer.isFavorite ? 'In Bookmarks' : 'To Bookmarks'}</span>
+            <span className="visually-hidden">
+              {offer.isFavorite ? 'In Bookmarks' : 'To Bookmarks'}
+            </span>
           </button>
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: `${offer.rating * 20}%`}}></span>
+            <span style={{ width: `${offer.rating * 20}%` }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

@@ -1,14 +1,21 @@
+import { ComponentProps } from 'react';
 import { AuthorizationStatus } from '../../constants/authorization-status';
 import { useAppSelector } from '../../hooks';
 import AuthorizedHeaderNav from './authorized-header-nav';
-import HeaderBase from './header-base';
+import HeaderLogo from './header-logo';
 import HeaderNav from './header-nav';
 
-export default function Header() {
+export default function Header({
+  onMainPage,
+}: ComponentProps<typeof HeaderLogo>) {
   const authStatus = useAppSelector((state) => state.authorizationStatus);
   return (
-    <HeaderBase>
-      {authStatus === AuthorizationStatus.Auth ? <AuthorizedHeaderNav/> : <HeaderNav/>}
-    </HeaderBase>
+    <HeaderLogo onMainPage={onMainPage}>
+      {authStatus === AuthorizationStatus.Auth ? (
+        <AuthorizedHeaderNav />
+      ) : (
+        <HeaderNav />
+      )}
+    </HeaderLogo>
   );
 }

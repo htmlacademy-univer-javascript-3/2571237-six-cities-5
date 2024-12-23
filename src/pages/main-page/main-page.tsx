@@ -9,7 +9,7 @@ export default function MainPage(){
       <Helmet>
         <title>6 cities</title>
       </Helmet>
-      <Header/>
+      <Header onMainPage/>
 
       <main className="page__main page__main--index">
         <Cities/>

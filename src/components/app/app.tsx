@@ -5,49 +5,52 @@ import LoginPage from '../../pages/login-page/login-page';
 import FavoritesPage from '../../pages/favorites-page/favorites-page';
 import OfferPage from '../../pages/offer-page/offer-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
-import PrivateRoute from '../private-route/private-route';
+import ProtectedRoute from '../protected-route/protected-route';
 import { HelmetProvider } from 'react-helmet-async';
 import { useAppSelector } from '../../hooks';
 import Spinner from '../spinner/spinner';
 import HistoryRouter from '../history-router/history-router';
 import browserHistory from '../../common/browser-history';
+import { AuthorizationStatus } from '../../constants/authorization-status';
 
-
-export default function App(){
-  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
+export default function App() {
+  const isOffersDataLoading = useAppSelector(
+    (state) => state.isOffersDataLoading
+  );
 
   if (isOffersDataLoading) {
-    return (<Spinner />);
+    return <Spinner />;
   }
 
   return (
     <HelmetProvider>
       <HistoryRouter history={browserHistory}>
         <Routes>
-          <Route
-            path={AppRoute.Main}
-            element={<MainPage />}
-          />
+          <Route path={AppRoute.Main} element={<MainPage />} />
           <Route
             path={AppRoute.Login}
-            element={<LoginPage />}
+            element={
+              <ProtectedRoute
+                restrictedFor={AuthorizationStatus.NoAuth}
+                redirectTo={AppRoute.Main}
+              >
+                <LoginPage />
+              </ProtectedRoute>
+            }
           />
           <Route
             path={AppRoute.Favorites}
             element={
-              <PrivateRoute>
+              <ProtectedRoute
+                restrictedFor={AuthorizationStatus.Auth}
+                redirectTo={AppRoute.Main}
+              >
                 <FavoritesPage />
-              </PrivateRoute>
+              </ProtectedRoute>
             }
           />
-          <Route
-            path={`${AppRoute.Offer}/:offerId`}
-            element={<OfferPage />}
-          />
-          <Route
-            path="*"
-            element={<NotFoundPage />}
-          />
+          <Route path={`${AppRoute.Offer}/:offerId`} element={<OfferPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </HistoryRouter>
     </HelmetProvider>

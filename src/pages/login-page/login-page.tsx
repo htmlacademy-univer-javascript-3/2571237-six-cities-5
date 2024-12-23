@@ -1,8 +1,8 @@
 import { Helmet } from 'react-helmet-async';
-import HeaderBase from '../../components/header/header-base';
 import { FormEvent } from 'react';
 import { loginAction } from '../../store/api-actions';
 import { useAppDispatch } from '../../hooks';
+import HeaderLogo from '../../components/header/header-logo';
 
 export default function LoginPage(){
   const dispatch = useAppDispatch();
@@ -22,7 +22,7 @@ export default function LoginPage(){
       <Helmet>
         <title>6 cities - login</title>
       </Helmet>
-      <HeaderBase/>
+      <HeaderLogo/>
 
       <main className="page__main page__main--login">
         <div className="page__login-container container">
