@@ -1,12 +1,12 @@
 import { Helmet } from 'react-helmet-async';
-import { PreviewOffers } from '../../types/offer/offer';
+import { OfferPreview } from '../../types/offer/offer';
 import { useAppSelector } from '../../hooks';
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import FavoritesEmpty from '../../components/favorites/favoirtes-empty';
 import Favorites from '../../components/favorites/favorites';
 
-function getFavoriteOffers(offers: PreviewOffers) {
+function getFavoriteOffers(offers: OfferPreview[]) {
   return offers.filter((offer) => offer.isFavorite);
 }
 

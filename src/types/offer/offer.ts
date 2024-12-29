@@ -3,9 +3,7 @@ import { UserData } from '../user-data';
 import { City } from './city';
 import { MapLocation } from './map-location';
 
-export type PreviewOffers = PreviewOffer[];
-
-export type PreviewOffer = {
+export type OfferPreview = {
   id: string;
   title: string;
   type: OfferPlaceType;
@@ -15,14 +13,16 @@ export type PreviewOffer = {
   isFavorite?: boolean;
   isPremium: boolean;
   rating: number;
-  previewImage: string;
+  previewImage?: string;
 };
 
-export type Offer = Omit<PreviewOffer, 'previewImage'> & {
+export type Host = UserData;
+
+export type Offer = OfferPreview & {
   description: string;
   bedrooms: number;
   goods: string[];
-  host: UserData;
+  host: Host;
   images: string[];
   maxAdults: number;
 };

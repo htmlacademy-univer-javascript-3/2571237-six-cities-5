@@ -12,13 +12,14 @@ import Spinner from '../spinner/spinner';
 import HistoryRouter from '../history-router/history-router';
 import browserHistory from '../../common/browser-history';
 import { AuthorizationStatus } from '../../constants/authorization-status';
+import { RequestStatus } from '../../constants/request-status';
 
 export default function App() {
-  const isOffersDataLoading = useAppSelector(
-    (state) => state.isOffersDataLoading
+  const fetchingStatus = useAppSelector(
+    (state) => state.offersFetchingStatus
   );
 
-  if (isOffersDataLoading) {
+  if (fetchingStatus === RequestStatus.Pending) {
     return <Spinner />;
   }
 
