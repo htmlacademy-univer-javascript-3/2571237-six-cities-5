@@ -6,25 +6,27 @@ import EmptyOffersList from '../offers-list/empty-offers-list';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { createSelector } from '@reduxjs/toolkit';
 import { State } from '../../types/app-state';
-import { PreviewOffers } from '../../types/offer/offer';
+import { OfferPreview } from '../../types/offer/offer';
 
-const cities: CityName[] =
-[
+const cities: CityName[] = [
   CityName.Paris,
   CityName.Cologne,
   CityName.Brussels,
   CityName.Amsterdam,
   CityName.Hamburg,
-  CityName.Dusseldorf
+  CityName.Dusseldorf,
 ];
 
-function getOffersInCity(offers: PreviewOffers, city: CityName){
+function getOffersInCity(offers: OfferPreview[], city: CityName) {
   return offers.filter((offer) => offer.city.name === city);
 }
 
-const selectOffersInCity = createSelector([(state: State) => state.offers, (state: State) => state.city], getOffersInCity);
+const selectOffersInCity = createSelector(
+  [(state: State) => state.offers, (state: State) => state.city],
+  getOffersInCity
+);
 
-export default function Cities(){
+export default function Cities() {
   const selectedCity = useAppSelector((state) => state.city);
   const offers = useAppSelector((state) => selectOffersInCity(state));
   const dispatch = useAppDispatch();
@@ -37,8 +39,14 @@ export default function Cities(){
           <ul className="locations__list tabs__list">
             {cities.map((city) => (
               <li key={city} className="locations__item">
-                <a className={classNames('locations__item-link', 'tabs__item', city === selectedCity && 'tabs__item--active')}
-                  href="#" onClick={(evt) => {
+                <a
+                  className={classNames(
+                    'locations__item-link',
+                    'tabs__item',
+                    city === selectedCity && 'tabs__item--active'
+                  )}
+                  href="#"
+                  onClick={(evt) => {
                     evt.preventDefault();
                     dispatch(changeCity(city));
                   }}
@@ -50,7 +58,11 @@ export default function Cities(){
           </ul>
         </section>
       </div>
-      {offers.length !== 0 ? <OffersList offers={offers} /> : <EmptyOffersList />}
+      {offers.length !== 0 ? (
+        <OffersList offers={offers} />
+      ) : (
+        <EmptyOffersList city={selectedCity}/>
+      )}
     </>
   );
 }

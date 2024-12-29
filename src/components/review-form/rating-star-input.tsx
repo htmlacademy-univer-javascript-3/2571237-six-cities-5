@@ -11,14 +11,15 @@ const titles: Record<string, string> = {
 type RatingStarInputProps = {
   rating: string;
   isChecked: boolean;
+  disabled: boolean;
   onInputChanged: ChangeEventHandler<HTMLInputElement>;
 }
 
-export default function RatingStarInput({rating, isChecked, onInputChanged}: RatingStarInputProps) {
+export default function RatingStarInput({rating, isChecked, disabled, onInputChanged}: RatingStarInputProps) {
   return (
     <>
       <input className="form__rating-input visually-hidden" name="rating" value={rating} id={`${rating}-stars`} type="radio"
-        onChange={onInputChanged} checked={isChecked}
+        onChange={onInputChanged} checked={isChecked} disabled={disabled}
       />
       <label htmlFor={`${rating}-stars`} className="reviews__rating-label form__rating-label" title={titles[rating]}>
         <svg className="form__star-image" width="37" height="33">

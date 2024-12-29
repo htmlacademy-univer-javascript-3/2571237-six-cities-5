@@ -1,32 +1,30 @@
-export default function Review(){
+import { AppBlock } from '../../constants/app-block';
+import { type Review } from '../../types/review';
+import Rating from '../rating/rating';
+import User from '../user/user';
+
+const displayedformatOptions: Intl.DateTimeFormatOptions = {
+  month: 'long',
+  year: 'numeric',
+};
+
+function getDisplayedFormatedDate(date: string) {
+  return new Date(date).toLocaleDateString('en-us', displayedformatOptions);
+}
+
+type ReviewProps = {
+  review: Review;
+};
+
+export default function Review({ review }: ReviewProps) {
   return (
     <li className="reviews__item">
-      <div className="reviews__user user">
-        <div className="reviews__avatar-wrapper user__avatar-wrapper">
-          <img
-            className="reviews__avatar user__avatar"
-            src="img/avatar-max.jpg"
-            width="54"
-            height="54"
-            alt="Reviews avatar"
-          />
-        </div>
-        <span className="reviews__user-name">Max</span>
-      </div>
+      <User block={AppBlock.Reviews} user={review.user} />
       <div className="reviews__info">
-        <div className="reviews__rating rating">
-          <div className="reviews__stars rating__stars">
-            <span style={{ width: '80%' }}></span>
-            <span className="visually-hidden">Rating</span>
-          </div>
-        </div>
-        <p className="reviews__text">
-          A quiet cozy and picturesque that hides behind a a river
-          by the unique lightness of Amsterdam. The building is
-          green and from 18th century.
-        </p>
-        <time className="reviews__time" dateTime="2019-04-24">
-          April 2019
+        <Rating block={AppBlock.Reviews} rating={review.rating} />
+        <p className="reviews__text">{review.comment}</p>
+        <time className="reviews__time" dateTime={review.date}>
+          {getDisplayedFormatedDate(review.date)}
         </time>
       </div>
     </li>

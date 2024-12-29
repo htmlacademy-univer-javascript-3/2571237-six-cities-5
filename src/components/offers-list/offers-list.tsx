@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { PreviewOffers } from '../../types/offer/offer';
+import { OfferPreview } from '../../types/offer/offer';
 import OfferCard from '../offer-card/offer-card';
 import { Map } from '../map/map';
 import { MapPoint } from '../../types/map-point';
@@ -7,13 +7,13 @@ import { MapBlock } from '../../constants/map-block';
 import { OfferCardBlock } from '../../constants/offer-card-block';
 
 type OffersListProps = {
-  offers: PreviewOffers;
+  offers: OfferPreview[];
 }
 
 export default function OffersList({ offers }: OffersListProps) {
   const [selectedOfferId, setSelectedOfferId] = useState('');
-  const city = offers[0].city;
   const offersPoints = offers.map<MapPoint>((offer) => ({id: offer.id, ...offer.location}));
+  const city = offers[0].city;
 
   return (
     <div className="cities">

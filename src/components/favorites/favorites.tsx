@@ -1,9 +1,9 @@
 import { OfferCardBlock } from '../../constants/offer-card-block';
-import { PreviewOffers } from '../../types/offer/offer';
+import { OfferPreview } from '../../types/offer/offer';
 import OfferCard from '../offer-card/offer-card';
 
-function getOffersByCity(offers: PreviewOffers) {
-  return offers.reduce<{ [key: string]: PreviewOffers }>((acc, offer) => {
+function getOffersByCity(offers: OfferPreview[]) {
+  return offers.reduce<{ [key: string]: OfferPreview[] }>((acc, offer) => {
     const city = offer.city.name;
     if (!(city in acc)) {
       acc[city] = [];
@@ -16,7 +16,7 @@ function getOffersByCity(offers: PreviewOffers) {
 }
 
 type FavoritesProps = {
-  favoriteOffers: PreviewOffers;
+  favoriteOffers: OfferPreview[];
 };
 
 export default function Favorites({ favoriteOffers }: FavoritesProps) {
