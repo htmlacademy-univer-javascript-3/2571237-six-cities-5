@@ -3,6 +3,7 @@ import { AuthorizationStatus } from '../../constants/authorization-status';
 import { PropsWithChildren } from 'react';
 import { AppRoute } from '../../constants/app-route';
 import { useAppSelector } from '../../hooks';
+import { getUserAuthStatus } from '../../store/user-data/selectors';
 
 type ProtectedRouteProps = PropsWithChildren<{
   restrictedFor: AuthorizationStatus;
@@ -14,6 +15,6 @@ export default function ProtectedRoute({
   redirectTo,
   children,
 }: ProtectedRouteProps) {
-  const authStatus = useAppSelector((state) => state.authorizationStatus);
+  const authStatus = useAppSelector(getUserAuthStatus);
   return authStatus === restrictedFor ? children : <Navigate to={redirectTo} />;
 }

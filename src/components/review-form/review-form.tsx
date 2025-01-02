@@ -9,7 +9,9 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { sendReviewAction } from '../../store/api-actions';
 import { ReviewFormData } from '../../types/review';
 import { RequestStatus } from '../../constants/request-status';
-import { clearReviewSendingStatus } from '../../store/actions';
+import { getOffer } from '../../store/offer-data/selectors';
+import { getReviewSendingStatus } from '../../store/reviews-data/selectors';
+import { dropReviewSendingStatus } from '../../store/reviews-data/reviews-data';
 
 const MIN_REVIEW_LENGTH = 50;
 const MAX_REVIEW_LENGTH = 300;
@@ -23,8 +25,8 @@ const ratingStars = Array.from({ length: 5 }, (_, i) => String(5 - i));
 
 export default function ReviewForm() {
   const dispatch = useAppDispatch();
-  const offerId = useAppSelector((state) => state.offer?.id)!;
-  const sendingStatus = useAppSelector((state) => state.reviewSendingStatus);
+  const {id: offerId} = useAppSelector(getOffer)!;
+  const sendingStatus = useAppSelector(getReviewSendingStatus);
 
   const [formData, setFormData] = useState(defaultFormData);
 
@@ -55,7 +57,7 @@ export default function ReviewForm() {
   useEffect(() => {
     if (sendingStatus === RequestStatus.Successful) {
       setFormData(defaultFormData);
-      dispatch(clearReviewSendingStatus());
+      dispatch(dropReviewSendingStatus());
     }
   }, [sendingStatus, dispatch]);
 

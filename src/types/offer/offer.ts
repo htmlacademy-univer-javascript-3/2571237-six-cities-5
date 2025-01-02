@@ -1,5 +1,5 @@
 import { OfferPlaceType } from '../../constants/offer-place-type';
-import { UserData } from '../user-data';
+import { User } from '../user';
 import { City } from './city';
 import { MapLocation } from './map-location';
 
@@ -16,7 +16,7 @@ export type OfferPreview = {
   previewImage?: string;
 };
 
-export type Host = UserData;
+export type Host = User;
 
 export type Offer = OfferPreview & {
   description: string;

@@ -1,9 +1,13 @@
+import 'leaflet/dist/leaflet.css';
 import { useEffect, useRef } from 'react';
 import { City } from '../../types/offer/city';
 import useMap from '../../hooks/use-map';
 import leaflet, { layerGroup, Marker } from 'leaflet';
 import { MapPoint } from '../../types/map-point';
 import { MapBlock } from '../../constants/map-block';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getMapSelectedPointId } from '../../store/map-data/selectors';
+import { dropMapSelectedPointId } from '../../store/map-data/map-data';
 
 const defaultIcon = leaflet.icon({
   iconUrl: '../../../markup/img/pin.svg',
@@ -21,12 +25,17 @@ type MapProps = {
   block: MapBlock;
   city: City;
   points: MapPoint[];
-  selectedPointId: string;
 };
 
-export function Map({block, city, points, selectedPointId}: MapProps) {
+export function Map({block, city, points}: MapProps) {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
+  const selectedPointId = useAppSelector(getMapSelectedPointId);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => () => {
+    dispatch(dropMapSelectedPointId());
+  }, [dispatch]);
 
   useEffect(() => {
     if (map) {

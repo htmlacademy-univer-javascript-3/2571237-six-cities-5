@@ -5,15 +5,15 @@ import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import FavoritesEmpty from '../../components/favorites/favoirtes-empty';
 import Favorites from '../../components/favorites/favorites';
+import { getOffers } from '../../store/offers-data/selectors';
 
 function getFavoriteOffers(offers: OfferPreview[]) {
   return offers.filter((offer) => offer.isFavorite);
 }
 
 export default function FavoritesPage() {
-  const favoriteOffers = useAppSelector((state) =>
-    getFavoriteOffers(state.offers)
-  );
+  const offers = useAppSelector(getOffers);
+  const favoriteOffers = getFavoriteOffers(offers);
 
   return (
     <div className="page">

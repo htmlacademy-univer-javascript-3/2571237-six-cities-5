@@ -1,6 +1,5 @@
 export enum AppBlock {
-  OfferCard = 'offer-card',
   OfferDetails = 'offer',
-  PlaceCard = 'place-card',
+  OfferCard = 'place-card',
   Reviews = 'reviews'
 }

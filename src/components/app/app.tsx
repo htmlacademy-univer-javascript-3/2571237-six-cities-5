@@ -13,11 +13,10 @@ import HistoryRouter from '../history-router/history-router';
 import browserHistory from '../../common/browser-history';
 import { AuthorizationStatus } from '../../constants/authorization-status';
 import { RequestStatus } from '../../constants/request-status';
+import { getOffersFetchingStatus } from '../../store/offers-data/selectors';
 
 export default function App() {
-  const fetchingStatus = useAppSelector(
-    (state) => state.offersFetchingStatus
-  );
+  const fetchingStatus = useAppSelector(getOffersFetchingStatus);
 
   if (fetchingStatus === RequestStatus.Pending) {
     return <Spinner />;

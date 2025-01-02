@@ -5,24 +5,31 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useEffect } from 'react';
 import { RequestStatus } from '../../constants/request-status';
 import { fetchNearPlacesAction, fetchOfferAction, fetchReviewsAction } from '../../store/api-actions';
-import { dropOffer } from '../../store/actions';
 import Spinner from '../../components/spinner/spinner';
 import OfferDetails from '../../components/offer-details/offer-details';
+import { getOfferFetchingStatus } from '../../store/offer-data/selectors';
+import { setMapSelectedPointId } from '../../store/map-data/map-data';
+import { dropOffer } from '../../store/offer-data/offer-data';
+import { dropReviews } from '../../store/reviews-data/reviews-data';
+import { dropNearPlaces } from '../../store/near-places-data/near-places-data';
 
 export default function OfferPage() {
   const { offerId } = useParams();
   const dispatch = useAppDispatch();
-  const fetchingStatus = useAppSelector((state) => state.offerFetchingStatus);
+  const fetchingStatus = useAppSelector(getOfferFetchingStatus);
 
   useEffect(() => {
     if (offerId) {
       dispatch(fetchOfferAction(offerId));
-      dispatch(fetchNearPlacesAction(offerId));
       dispatch(fetchReviewsAction(offerId));
+      dispatch(fetchNearPlacesAction(offerId));
+      dispatch(setMapSelectedPointId(offerId));
     }
 
     return () => {
       dispatch(dropOffer());
+      dispatch(dropReviews());
+      dispatch(dropNearPlaces());
     };
   }, [offerId, dispatch]);
 

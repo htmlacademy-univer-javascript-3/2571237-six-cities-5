@@ -1,35 +1,22 @@
 import classNames from 'classnames';
 import { CityName } from '../../constants/city-name';
-import { changeCity } from '../../store/actions';
 import OffersList from '../offers-list/offers-list';
 import EmptyOffersList from '../offers-list/empty-offers-list';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { createSelector } from '@reduxjs/toolkit';
-import { State } from '../../types/app-state';
+import { useAppSelector } from '../../hooks';
 import { OfferPreview } from '../../types/offer/offer';
+import { useState } from 'react';
+import { getOffers } from '../../store/offers-data/selectors';
 
-const cities: CityName[] = [
-  CityName.Paris,
-  CityName.Cologne,
-  CityName.Brussels,
-  CityName.Amsterdam,
-  CityName.Hamburg,
-  CityName.Dusseldorf,
-];
+const cities: CityName[] = Object.values(CityName);
 
-function getOffersInCity(offers: OfferPreview[], city: CityName) {
+function getOffersByCity(offers: OfferPreview[], city: CityName) {
   return offers.filter((offer) => offer.city.name === city);
 }
 
-const selectOffersInCity = createSelector(
-  [(state: State) => state.offers, (state: State) => state.city],
-  getOffersInCity
-);
-
 export default function Cities() {
-  const selectedCity = useAppSelector((state) => state.city);
-  const offers = useAppSelector((state) => selectOffersInCity(state));
-  const dispatch = useAppDispatch();
+  const [activeCity, setActiveCity] = useState(CityName.Paris);
+  const offers = useAppSelector(getOffers);
+  const cityOffers = getOffersByCity(offers, activeCity);
 
   return (
     <>
@@ -43,12 +30,12 @@ export default function Cities() {
                   className={classNames(
                     'locations__item-link',
                     'tabs__item',
-                    city === selectedCity && 'tabs__item--active'
+                    city === activeCity && 'tabs__item--active'
                   )}
                   href="#"
                   onClick={(evt) => {
                     evt.preventDefault();
-                    dispatch(changeCity(city));
+                    setActiveCity(city);
                   }}
                 >
                   <span>{city}</span>
@@ -59,9 +46,9 @@ export default function Cities() {
         </section>
       </div>
       {offers.length !== 0 ? (
-        <OffersList offers={offers} />
+        <OffersList offers={cityOffers} />
       ) : (
-        <EmptyOffersList city={selectedCity}/>
+        <EmptyOffersList city={activeCity} />
       )}
     </>
   );

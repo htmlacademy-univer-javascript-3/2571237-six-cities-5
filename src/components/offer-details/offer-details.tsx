@@ -2,18 +2,21 @@ import { AppBlock } from '../../constants/app-block';
 import { MapBlock } from '../../constants/map-block';
 import { OfferCardBlock } from '../../constants/offer-card-block';
 import { useAppSelector } from '../../hooks';
+import { getNearPlaces } from '../../store/near-places-data/selectors';
+import { getOffer } from '../../store/offer-data/selectors';
 import BookmarkButton from '../bookmark-button/bookmark-button';
 import { Map } from '../map/map';
 import OfferCard from '../offer-card/offer-card';
 import OfferHost from '../offer-host/offer-host';
+import Rating from '../rating/rating';
 import ReviewsList from '../reviews-list/reviews-list';
 
 const MAX_NEAR_PLACES_COUNT = 3;
 const MAX_OFFER_IMAGES_COUNT = 6;
 
 export default function OfferDetails() {
-  const offer = useAppSelector((state) => state.offer)!;
-  const nearPlaces = useAppSelector((state) => state.nearPlaces).slice(
+  const offer = useAppSelector(getOffer)!;
+  const nearPlaces = useAppSelector(getNearPlaces).slice(
     0,
     MAX_NEAR_PLACES_COUNT
   );
@@ -25,11 +28,7 @@ export default function OfferDetails() {
           <div className="offer__gallery">
             {offer.images.slice(0, MAX_OFFER_IMAGES_COUNT).map((imgSrc) => (
               <div key={imgSrc} className="offer__image-wrapper">
-                <img
-                  className="offer__image"
-                  src={imgSrc}
-                  alt="Photo studio"
-                />
+                <img className="offer__image" src={imgSrc} alt="Photo studio" />
               </div>
             ))}
           </div>
@@ -48,15 +47,11 @@ export default function OfferDetails() {
                 isActive={!!offer.isFavorite}
               />
             </div>
-            <div className="offer__rating rating">
-              <div className="offer__stars rating__stars">
-                <span style={{ width: `${offer.rating * 20}%` }}></span>
-                <span className="visually-hidden">Rating</span>
-              </div>
+            <Rating block={AppBlock.OfferDetails} rating={offer.rating}>
               <span className="offer__rating-value rating__value">
                 {offer.rating}
               </span>
-            </div>
+            </Rating>
             <ul className="offer__features">
               <li className="offer__feature offer__feature--entire">
                 {offer.type}
@@ -93,7 +88,6 @@ export default function OfferDetails() {
             points={nearPlaces
               .concat([offer])
               .map((place) => ({ id: place.id, ...place.location }))}
-            selectedPointId={offer.id}
           />
         </div>
       </section>

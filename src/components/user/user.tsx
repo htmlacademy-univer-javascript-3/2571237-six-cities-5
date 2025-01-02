@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { UserData } from '../../types/user-data';
+import { type User } from '../../types/user';
 import { AppBlock } from '../../constants/app-block';
 
 type UserBlock = AppBlock.OfferDetails | AppBlock.Reviews;
@@ -22,7 +22,7 @@ const rootClassName: Record<UserBlock, string> = {
 
 type UserProps = {
   block: UserBlock;
-  user: UserData;
+  user: User;
 };
 
 export default function User({ block, user }: UserProps) {
