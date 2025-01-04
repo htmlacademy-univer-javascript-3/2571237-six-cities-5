@@ -13,11 +13,11 @@ import HistoryRouter from '../history-router/history-router';
 import browserHistory from '../../common/browser-history';
 import { AuthorizationStatus } from '../../constants/authorization-status';
 import { RequestStatus } from '../../constants/request-status';
+import { getOffersFetchingStatus } from '../../store/offers-data/selectors';
+import Header from '../header/header';
 
 export default function App() {
-  const fetchingStatus = useAppSelector(
-    (state) => state.offersFetchingStatus
-  );
+  const fetchingStatus = useAppSelector(getOffersFetchingStatus);
 
   if (fetchingStatus === RequestStatus.Pending) {
     return <Spinner />;
@@ -27,7 +27,6 @@ export default function App() {
     <HelmetProvider>
       <HistoryRouter history={browserHistory}>
         <Routes>
-          <Route path={AppRoute.Main} element={<MainPage />} />
           <Route
             path={AppRoute.Login}
             element={
@@ -39,18 +38,30 @@ export default function App() {
               </ProtectedRoute>
             }
           />
-          <Route
-            path={AppRoute.Favorites}
-            element={
-              <ProtectedRoute
-                restrictedFor={AuthorizationStatus.Auth}
-                redirectTo={AppRoute.Main}
-              >
-                <FavoritesPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route path={`${AppRoute.Offer}/:offerId`} element={<OfferPage />} />
+
+          <Route element={<Header onMainPage />}>
+            <Route path={AppRoute.Main} element={<MainPage />} />
+          </Route>
+
+          <Route element={<Header />}>
+            <Route
+              path={AppRoute.Favorites}
+              element={
+                <ProtectedRoute
+                  restrictedFor={AuthorizationStatus.Auth}
+                  redirectTo={AppRoute.Login}
+                >
+                  <FavoritesPage />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path={`${AppRoute.Offer}/:offerId`}
+              element={<OfferPage />}
+            />
+          </Route>
+
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </HistoryRouter>

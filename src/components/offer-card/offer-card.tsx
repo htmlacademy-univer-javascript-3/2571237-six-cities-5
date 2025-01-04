@@ -1,18 +1,30 @@
-import { MouseEventHandler } from 'react';
 import classNames from 'classnames';
 import { OfferPreview } from '../../types/offer/offer';
 import { AppRoute } from '../../constants/app-route';
 import { Link } from 'react-router-dom';
-import { offerPreviewImageSizes } from './offer-preview-image-size';
-import { OfferCardBlock } from '../../constants/offer-card-block';
 import BookmarkButton from '../bookmark-button/bookmark-button';
 import Rating from '../rating/rating';
 import { AppBlock } from '../../constants/app-block';
 
+type ImageSize = {
+  width: number;
+  height: number;
+};
+
+type OfferCardBlock = AppBlock.Cities | AppBlock.NearPlaces | AppBlock.Favorites;
+
+const offerPreviewImageSizes: Record<OfferCardBlock, ImageSize> = {
+  [AppBlock.Cities]: {width: 260, height: 200},
+  [AppBlock.NearPlaces]: {width: 260, height: 200},
+  [AppBlock.Favorites]: {width: 150, height: 110}
+};
+
+type OnOfferCardHoveredHandler = (offerId: OfferPreview['id']) => void;
+
 type OfferCardProps = {
   block: OfferCardBlock;
   offer: OfferPreview;
-  onCardHovered?: MouseEventHandler<HTMLElement>;
+  onCardHovered?: OnOfferCardHoveredHandler;
 };
 
 export default function OfferCard({
@@ -22,7 +34,7 @@ export default function OfferCard({
 }: OfferCardProps) {
   return (
     <article
-      onMouseEnter={onCardHovered}
+      onMouseEnter={() => onCardHovered?.(offer.id)}
       className={classNames('place-card', `${block}__card`)}
     >
       {offer.isPremium && (

@@ -11,7 +11,7 @@ export default function OfferHost({ host, description }: OfferHostProps) {
   return (
     <div className="offer__host">
       <h2 className="offer__host-title">Meet the host</h2>
-      <User block={AppBlock.OfferDetails} user={host} />
+      <User block={AppBlock.Offer} user={host} />
       <div className="offer__description">
         <p className="offer__text">{description}</p>
       </div>

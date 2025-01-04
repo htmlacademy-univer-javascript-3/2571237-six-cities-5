@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { AppBlock } from '../../constants/app-block';
 
-type BookmarkButtonBlock = AppBlock.OfferCard | AppBlock.OfferDetails;
+type BookmarkButtonBlock = AppBlock.OfferCard | AppBlock.Offer;
 
 type IconSize = {
   width: number;
@@ -10,7 +10,7 @@ type IconSize = {
 
 const iconSize: Record<BookmarkButtonBlock, IconSize> = {
   [AppBlock.OfferCard]: { width: 18, height: 19 },
-  [AppBlock.OfferDetails]: { width: 31, height: 33 },
+  [AppBlock.Offer]: { width: 31, height: 33 },
 };
 
 type BookmarkButtonProps = {

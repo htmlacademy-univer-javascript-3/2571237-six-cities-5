@@ -1,6 +1,7 @@
-import { OfferCardBlock } from '../../constants/offer-card-block';
+import classNames from 'classnames';
+import { AppBlock } from '../../constants/app-block';
 import { OfferPreview } from '../../types/offer/offer';
-import OfferCard from '../offer-card/offer-card';
+import OffersList from '../offers-list/offers-list';
 
 function getOffersByCity(offers: OfferPreview[]) {
   return offers.reduce<{ [key: string]: OfferPreview[] }>((acc, offer) => {
@@ -22,7 +23,7 @@ type FavoritesProps = {
 export default function Favorites({ favoriteOffers }: FavoritesProps) {
   const favoriteOffersByCity = getOffersByCity(favoriteOffers);
   return (
-    <main className="page__main page__main--favorites">
+    <main className={classNames('page__main page__main--favorites')}>
       <div className="page__favorites-container container">
         <section className="favorites">
           <h1 className="favorites__title">Saved listing</h1>
@@ -37,13 +38,7 @@ export default function Favorites({ favoriteOffers }: FavoritesProps) {
                   </div>
                 </div>
                 <div className="favorites__places">
-                  {favorites.map((offer) => (
-                    <OfferCard
-                      key={offer.id}
-                      block={OfferCardBlock.Favorites}
-                      offer={offer}
-                    />
-                  ))}
+                  <OffersList block={AppBlock.Favorites} offers={favorites} />
                 </div>
               </li>
             ))}

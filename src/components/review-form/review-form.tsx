@@ -1,61 +1,74 @@
 import {
-  ChangeEventHandler,
+  ChangeEvent,
   FormEventHandler,
+  useCallback,
   useEffect,
   useState,
 } from 'react';
-import RatingStarInput from './rating-star-input';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { sendReviewAction } from '../../store/api-actions';
-import { ReviewFormData } from '../../types/review';
 import { RequestStatus } from '../../constants/request-status';
-import { clearReviewSendingStatus } from '../../store/actions';
+import { getOffer } from '../../store/offer-data/selectors';
+import { getReviewSendingStatus } from '../../store/reviews-data/selectors';
+import { dropReviewSendingStatus } from '../../store/reviews-data/reviews-data';
+import { ReviewFormSentData } from '../../types/review';
+import { RatingStarInput } from './rating-star-input';
 
-const MIN_REVIEW_LENGTH = 50;
-const MAX_REVIEW_LENGTH = 300;
+const MIN_COMMENT_LENGTH = 50;
+const MAX_COMMENT_LENGTH = 300;
 
-const defaultFormData = {
+type ReviewFormData = {
+  comment: string;
+  rating: string;
+};
+
+const defaultFormData: ReviewFormData = {
+  comment: '',
   rating: '',
-  review: '',
 };
 
 const ratingStars = Array.from({ length: 5 }, (_, i) => String(5 - i));
 
+function validateReview({ comment, rating }: ReviewFormData) {
+  return (
+    comment.length >= MIN_COMMENT_LENGTH &&
+    comment.length <= MAX_COMMENT_LENGTH &&
+    !Number.isNaN(rating)
+  );
+}
+
 export default function ReviewForm() {
   const dispatch = useAppDispatch();
-  const offerId = useAppSelector((state) => state.offer?.id)!;
-  const sendingStatus = useAppSelector((state) => state.reviewSendingStatus);
+  const { id: offerId } = useAppSelector(getOffer)!;
+  const sendingStatus = useAppSelector(getReviewSendingStatus);
 
   const [formData, setFormData] = useState(defaultFormData);
 
-  const fieldChangedHandler: ChangeEventHandler<
-    HTMLInputElement | HTMLTextAreaElement
-  > = (evt) => {
-    const target = evt.target;
-    setFormData({ ...formData, [target.name]: target.value });
-  };
+  const fieldChangedHandler = useCallback(
+    (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      const target = evt.target;
+      setFormData((data) => ({ ...data, [target.name]: target.value }));
+    },
+    []
+  );
 
   const submitFormHandler: FormEventHandler<HTMLFormElement> = (evt) => {
     evt.preventDefault();
-    const review: ReviewFormData = {
-      comment: formData.review,
+    const review: ReviewFormSentData = {
+      comment: formData.comment,
       rating: +formData.rating,
     };
-
     dispatch(sendReviewAction({ offerId, review }));
   };
 
-  const reviewValid =
-    formData.review.length >= MIN_REVIEW_LENGTH &&
-    formData.review.length <= MAX_REVIEW_LENGTH &&
-    formData.rating !== '';
+  const reviewValid = validateReview(formData);
 
   const isSending = sendingStatus === RequestStatus.Pending;
 
   useEffect(() => {
     if (sendingStatus === RequestStatus.Successful) {
       setFormData(defaultFormData);
-      dispatch(clearReviewSendingStatus());
+      dispatch(dropReviewSendingStatus());
     }
   }, [sendingStatus, dispatch]);
 
@@ -83,10 +96,10 @@ export default function ReviewForm() {
       <textarea
         className="reviews__textarea form__textarea"
         id="review"
-        name="review"
+        name="comment"
         placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={fieldChangedHandler}
-        value={formData.review}
+        value={formData.comment}
         disabled={isSending}
       />
       <div className="reviews__button-wrapper">
@@ -96,7 +109,7 @@ export default function ReviewForm() {
           and describe your stay with at least
           <b className="reviews__text-amount">
             {' '}
-            {MIN_REVIEW_LENGTH} characters
+            {MIN_COMMENT_LENGTH} characters
           </b>
           .
         </p>

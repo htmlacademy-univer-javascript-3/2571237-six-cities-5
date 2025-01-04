@@ -1,68 +1,53 @@
-import classNames from 'classnames';
-import { CityName } from '../../constants/city-name';
-import { changeCity } from '../../store/actions';
-import OffersList from '../offers-list/offers-list';
-import EmptyOffersList from '../offers-list/empty-offers-list';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { createSelector } from '@reduxjs/toolkit';
-import { State } from '../../types/app-state';
+import { AppBlock } from '../../constants/app-block';
+import { useAppDispatch } from '../../hooks';
 import { OfferPreview } from '../../types/offer/offer';
+import OffersList from '../offers-list/offers-list';
+import { setMapSelectedPointId } from '../../store/map-data/map-data';
 
-const cities: CityName[] = [
-  CityName.Paris,
-  CityName.Cologne,
-  CityName.Brussels,
-  CityName.Amsterdam,
-  CityName.Hamburg,
-  CityName.Dusseldorf,
-];
+type CitiesProps = {
+  cityOffers: OfferPreview[];
+};
 
-function getOffersInCity(offers: OfferPreview[], city: CityName) {
-  return offers.filter((offer) => offer.city.name === city);
-}
-
-const selectOffersInCity = createSelector(
-  [(state: State) => state.offers, (state: State) => state.city],
-  getOffersInCity
-);
-
-export default function Cities() {
-  const selectedCity = useAppSelector((state) => state.city);
-  const offers = useAppSelector((state) => selectOffersInCity(state));
+export default function Cities({ cityOffers }: CitiesProps) {
+  const city = cityOffers[0].city;
   const dispatch = useAppDispatch();
 
   return (
-    <>
-      <h1 className="visually-hidden">Cities</h1>
-      <div className="tabs">
-        <section className="locations container">
-          <ul className="locations__list tabs__list">
-            {cities.map((city) => (
-              <li key={city} className="locations__item">
-                <a
-                  className={classNames(
-                    'locations__item-link',
-                    'tabs__item',
-                    city === selectedCity && 'tabs__item--active'
-                  )}
-                  href="#"
-                  onClick={(evt) => {
-                    evt.preventDefault();
-                    dispatch(changeCity(city));
-                  }}
-                >
-                  <span>{city}</span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </section>
+    <section className="cities__places places">
+      <h2 className="visually-hidden">Places</h2>
+      <b className="places__found">
+        {cityOffers.length} places to stay in {city.name}
+      </b>
+      <form className="places__sorting" action="#" method="get">
+        <span className="places__sorting-caption">Sort by</span>
+        <span className="places__sorting-type" tabIndex={0}>
+          Popular
+          <svg className="places__sorting-arrow" width="7" height="4">
+            <use xlinkHref="#icon-arrow-select"></use>
+          </svg>
+        </span>
+        <ul className="places__options places__options--custom">
+          <li className="places__option places__option--active" tabIndex={0}>
+            Popular
+          </li>
+          <li className="places__option" tabIndex={0}>
+            Price: low to high
+          </li>
+          <li className="places__option" tabIndex={0}>
+            Price: high to low
+          </li>
+          <li className="places__option" tabIndex={0}>
+            Top rated first
+          </li>
+        </ul>
+      </form>
+      <div className="cities__places-list places__list tabs__content">
+        <OffersList
+          block={AppBlock.Cities}
+          offers={cityOffers}
+          onCardHovered={(offerId) => dispatch(setMapSelectedPointId(offerId))}
+        />
       </div>
-      {offers.length !== 0 ? (
-        <OffersList offers={offers} />
-      ) : (
-        <EmptyOffersList city={selectedCity}/>
-      )}
-    </>
+    </section>
   );
 }

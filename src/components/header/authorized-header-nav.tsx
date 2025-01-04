@@ -4,15 +4,17 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { logoutAction } from '../../store/api-actions';
 import { MouseEventHandler } from 'react';
 import { OfferPreview } from '../../types/offer/offer';
+import { getOffers } from '../../store/offers-data/selectors';
+import { getUserName } from '../../store/user-data/selectors';
 
-function getFavoriteOffersCount(offers: OfferPreview[]) {
+function getFavoriteCount(offers: OfferPreview[]) {
   return offers.filter((offer) => offer.isFavorite).length;
 }
 
 export default function AuthorizedHeaderNav() {
-  const favoriteCount = useAppSelector((state) =>
-    getFavoriteOffersCount(state.offers)
-  );
+  const offers = useAppSelector(getOffers);
+  const favoriteCount = getFavoriteCount(offers);
+  const userName = useAppSelector(getUserName);
   const dispatch = useAppDispatch();
 
   const handleSignOut: MouseEventHandler<HTMLAnchorElement> = (evt) => {
@@ -30,7 +32,7 @@ export default function AuthorizedHeaderNav() {
           >
             <div className="header__avatar-wrapper user__avatar-wrapper"></div>
             <span className="header__user-name user__name">
-              Oliver.conner@gmail.com
+              {userName}
             </span>
             <span className="header__favorite-count">{favoriteCount}</span>
           </Link>
