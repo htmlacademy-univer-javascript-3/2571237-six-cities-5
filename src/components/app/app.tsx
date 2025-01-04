@@ -49,7 +49,7 @@ export default function App() {
               element={
                 <ProtectedRoute
                   restrictedFor={AuthorizationStatus.Auth}
-                  redirectTo={AppRoute.Main}
+                  redirectTo={AppRoute.Login}
                 >
                   <FavoritesPage />
                 </ProtectedRoute>

@@ -34,7 +34,7 @@ export default function MainPage() {
         <title>6 cities</title>
       </Helmet>
 
-      <main className="page__main page__main--index">
+      <main className={classNames('page__main page__main--index', cityOffersEmpty && 'page__main--index-empty')}>
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <Locations activeCity={activeCity} setActiveCity={setActiveCity} />

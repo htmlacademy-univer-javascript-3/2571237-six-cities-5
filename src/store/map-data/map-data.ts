@@ -7,7 +7,7 @@ const initialState: MapData = {
   selectedPointId: null,
 };
 
-export const mapProcess = createSlice({
+export const mapData = createSlice({
   name: Namespace.Map,
   initialState,
   reducers: {
@@ -20,4 +20,4 @@ export const mapProcess = createSlice({
   },
 });
 
-export const { setMapSelectedPointId, dropMapSelectedPointId } = mapProcess.actions;
+export const { setMapSelectedPointId, dropMapSelectedPointId } = mapData.actions;

@@ -37,3 +37,8 @@ export type NearPlacesData = {
 export type MapData = {
   selectedPointId: MapPoint['id'] | null;
 };
+
+export type FavoritesData = {
+  favorites: OfferPreview[];
+  favoritesFetchingStatus: RequestStatus;
+}

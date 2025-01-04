@@ -5,4 +5,5 @@ export enum Namespace {
   Reviews = 'REVIEWS',
   NearPlaces = 'NEAR_PLACES',
   Map = 'MAP',
+  Favorite = 'FAVORITE',
 }
