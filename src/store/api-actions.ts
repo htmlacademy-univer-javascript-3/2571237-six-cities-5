@@ -71,7 +71,7 @@ export const fetchFavoritesAction = createAsyncThunk<OfferPreview[], undefined, 
     const { data } = await api.get<OfferPreview[]>(`${APIRoute.Favorite}`);
     return data;
   }
-)
+);
 
 export const checkAuthAction = createAsyncThunk<
   AuthorizedUser,

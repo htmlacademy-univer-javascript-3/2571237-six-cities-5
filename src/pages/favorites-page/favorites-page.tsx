@@ -27,7 +27,7 @@ export default function FavoritesPage() {
     return () => {
       dispatch(dropFavorites());
     };
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="page">
