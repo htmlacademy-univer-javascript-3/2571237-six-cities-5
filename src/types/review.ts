@@ -10,4 +10,4 @@ export type Review = {
   rating: number;
 };
 
-export type ReviewFormData = Pick<Review, 'comment' | 'rating'>;
+export type ReviewFormSentData = Pick<Review, 'comment' | 'rating'>;

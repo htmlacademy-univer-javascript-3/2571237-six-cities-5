@@ -4,10 +4,9 @@ import { City } from '../../types/offer/city';
 import useMap from '../../hooks/use-map';
 import leaflet, { layerGroup, Marker } from 'leaflet';
 import { MapPoint } from '../../types/map-point';
-import { MapBlock } from '../../constants/map-block';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppSelector } from '../../hooks';
 import { getMapSelectedPointId } from '../../store/map-data/selectors';
-import { dropMapSelectedPointId } from '../../store/map-data/map-data';
+import { AppBlock } from '../../constants/app-block';
 
 const defaultIcon = leaflet.icon({
   iconUrl: '../../../markup/img/pin.svg',
@@ -21,25 +20,25 @@ const activeIcon = leaflet.icon({
   iconAnchor: [20, 40],
 });
 
+type MapBlock = AppBlock.Cities | AppBlock.Offer;
+
 type MapProps = {
   block: MapBlock;
   city: City;
   points: MapPoint[];
 };
 
-export function Map({block, city, points}: MapProps) {
+export function Map({ block, city, points }: MapProps) {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
   const selectedPointId = useAppSelector(getMapSelectedPointId);
-  const dispatch = useAppDispatch();
-
-  useEffect(() => () => {
-    dispatch(dropMapSelectedPointId());
-  }, [dispatch]);
 
   useEffect(() => {
     if (map) {
-      map.setView([city.location.latitude, city.location.longitude], city.location.zoom);
+      map.setView(
+        [city.location.latitude, city.location.longitude],
+        city.location.zoom
+      );
     }
   }, [map, city]);
 
@@ -49,7 +48,7 @@ export function Map({block, city, points}: MapProps) {
       points.forEach((point) => {
         const marker = new Marker({
           lat: point.latitude,
-          lng: point.longitude
+          lng: point.longitude,
         });
 
         marker
@@ -63,11 +62,5 @@ export function Map({block, city, points}: MapProps) {
     }
   }, [map, points, selectedPointId]);
 
-  return (
-    <section
-      className={`${block}__map map`}
-      ref={mapRef}
-    >
-    </section>
-  );
+  return <section className={`${block}__map map`} ref={mapRef}></section>;
 }

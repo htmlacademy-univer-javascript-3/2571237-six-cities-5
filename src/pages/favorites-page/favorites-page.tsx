@@ -1,7 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { OfferPreview } from '../../types/offer/offer';
 import { useAppSelector } from '../../hooks';
-import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import FavoritesEmpty from '../../components/favorites/favoirtes-empty';
 import Favorites from '../../components/favorites/favorites';
@@ -20,7 +19,6 @@ export default function FavoritesPage() {
       <Helmet>
         <title>6 cities - favorites</title>
       </Helmet>
-      <Header />
 
       {favoriteOffers.length === 0 ? (
         <FavoritesEmpty />

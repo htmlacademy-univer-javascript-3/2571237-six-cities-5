@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { type User } from '../../types/user';
 import { AppBlock } from '../../constants/app-block';
 
-type UserBlock = AppBlock.OfferDetails | AppBlock.Reviews;
+type UserBlock = AppBlock.Offer | AppBlock.Reviews;
 
 type UserAvatarAttr = {
   width: number;
@@ -11,12 +11,12 @@ type UserAvatarAttr = {
 }
 
 const avatarAttrs: Record<UserBlock, UserAvatarAttr> = {
-  [AppBlock.OfferDetails]: {width: 74, height: 74, alt: 'Host avatar'},
+  [AppBlock.Offer]: {width: 74, height: 74, alt: 'Host avatar'},
   [AppBlock.Reviews]: {width: 54, height: 54, alt: 'Reviews avatar'}
 };
 
 const rootClassName: Record<UserBlock, string> = {
-  [AppBlock.OfferDetails]: `${AppBlock.OfferDetails}__host-user`,
+  [AppBlock.Offer]: `${AppBlock.Offer}__host-user`,
   [AppBlock.Reviews]: `${AppBlock.Reviews}__user`
 };
 

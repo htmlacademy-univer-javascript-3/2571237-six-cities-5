@@ -5,7 +5,7 @@ function convertRatingToWidthInPercent(rating: number){
   return Math.round(rating) * 20;
 }
 
-type RatingBlock = AppBlock.OfferCard | AppBlock.OfferDetails | AppBlock.Reviews;
+type RatingBlock = AppBlock.OfferCard | AppBlock.Offer | AppBlock.Reviews;
 
 type RatingProps = PropsWithChildren & {
   block: RatingBlock;

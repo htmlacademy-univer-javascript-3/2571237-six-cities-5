@@ -22,7 +22,7 @@ export default function LoginPage(){
       <Helmet>
         <title>6 cities - login</title>
       </Helmet>
-      <HeaderLogo/>
+      <HeaderLogo />
 
       <main className="page__main page__main--login">
         <div className="page__login-container container">

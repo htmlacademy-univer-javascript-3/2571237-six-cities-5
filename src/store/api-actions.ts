@@ -6,7 +6,7 @@ import { AuthData } from '../types/authorization/auth-data';
 import { dropToken, saveToken } from '../services/token';
 import { AppRoute } from '../constants/app-route';
 import { Offer, OfferPreview } from '../types/offer/offer';
-import { Review, ReviewFormData, Reviews } from '../types/review';
+import { Review, ReviewFormSentData, Reviews } from '../types/review';
 import { AuthorizedUser } from '../types/authorization/authorized-user';
 
 type Extra = {
@@ -49,12 +49,12 @@ export const fetchReviewsAction = createAsyncThunk<Reviews, Offer['id'], Extra>(
   }
 );
 
-type SendReviewData = {
+type SendReviewActionData = {
   offerId: Offer['id'];
-  review: ReviewFormData;
+  review: ReviewFormSentData;
 };
 
-export const sendReviewAction = createAsyncThunk<Review, SendReviewData, Extra>(
+export const sendReviewAction = createAsyncThunk<Review, SendReviewActionData, Extra>(
   'reviews/send',
   async ({ offerId, review }, { extra: api }) => {
     const { data } = await api.post<Review>(
