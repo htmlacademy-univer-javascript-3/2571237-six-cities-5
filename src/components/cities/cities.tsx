@@ -1,4 +1,4 @@
-import { ComponentProps, useCallback } from 'react';
+import { useCallback } from 'react';
 import { AppBlock } from '../../constants/app-block';
 import { useAppDispatch } from '../../hooks';
 import { OfferPreview } from '../../types/offer/offer';
@@ -18,12 +18,12 @@ export default function Cities({ cityOffers }: CitiesProps) {
 
   const onOfferCardHoveredHandler = useCallback(
     (offerId: OfferPreview['id']) => dispatch(setMapSelectedPointId(offerId)),
-    []
+    [dispatch]
   );
 
   const onOfferCardMouseLeftHandler = useCallback(
     () => dispatch(dropMapSelectedPointId()),
-    []
+    [dispatch]
   );
 
   return (

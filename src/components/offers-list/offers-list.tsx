@@ -1,9 +1,3 @@
-import { AppBlock } from '../../constants/app-block';
-import { useAppDispatch } from '../../hooks';
-import {
-  setMapSelectedPointId,
-  dropMapSelectedPointId,
-} from '../../store/map-data/map-data';
 import { OfferPreview } from '../../types/offer/offer';
 import OfferCard from '../offer-card/offer-card';
 import { ComponentProps } from 'react';

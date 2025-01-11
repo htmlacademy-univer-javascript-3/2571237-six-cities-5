@@ -1,10 +1,5 @@
-import { ComponentProps } from 'react';
 import { AppBlock } from '../../constants/app-block';
-import { AppRoute } from '../../constants/app-route';
-import { FavoriteStatus } from '../../constants/favorite-status';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { redirectToRoute } from '../../store/actions';
-import { changeFavoriteStatusAction } from '../../store/api-actions';
+import { useAppSelector } from '../../hooks';
 import { isUserAuthorized } from '../../store/user-data/selectors';
 import { Offer } from '../../types/offer/offer';
 import BookmarkButton from '../bookmark-button/bookmark-button';
