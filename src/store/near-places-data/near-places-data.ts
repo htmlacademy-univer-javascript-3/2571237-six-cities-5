@@ -1,7 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NearPlacesData } from '../../types/app-state';
 import { Namespace } from '../../constants/store-namespace';
-import { fetchNearPlacesAction } from '../api-actions';
+import {
+  changeFavoriteStatusAction,
+  fetchNearPlacesAction,
+} from '../api-actions';
+import { UpdateOfferPreviewItemInList } from '../../utils/offer-utils';
 
 const initialState: NearPlacesData = {
   nearPlaces: [],
@@ -16,9 +20,13 @@ export const nearPlacesData = createSlice({
     },
   },
   extraReducers(builder) {
-    builder.addCase(fetchNearPlacesAction.fulfilled, (state, action) => {
-      state.nearPlaces = action.payload;
-    });
+    builder
+      .addCase(fetchNearPlacesAction.fulfilled, (state, action) => {
+        state.nearPlaces = action.payload;
+      })
+      .addCase(changeFavoriteStatusAction.fulfilled, (state, action) => {
+        UpdateOfferPreviewItemInList(state.nearPlaces, action.payload);
+      });
   },
 });
 

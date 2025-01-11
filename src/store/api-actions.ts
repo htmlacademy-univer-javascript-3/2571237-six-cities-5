@@ -8,8 +8,15 @@ import { AppRoute } from '../constants/app-route';
 import { Offer, OfferPreview } from '../types/offer/offer';
 import { Review, ReviewFormSentData, Reviews } from '../types/review';
 import { AuthorizedUser } from '../types/authorization/authorized-user';
+import { FavoriteStatus } from '../constants/favorite-status';
+import { AppDispatch, State } from '../types/app-state';
+import { Namespace } from '../constants/store-namespace';
+import { updateOffer } from './offer-data/offer-data';
+import { deleteFavorite } from './favorites-data/favorites-data';
 
 type Extra = {
+  dispatch: AppDispatch;
+  state: State;
   extra: AxiosInstance;
 };
 
@@ -54,21 +61,51 @@ type SendReviewActionData = {
   review: ReviewFormSentData;
 };
 
-export const sendReviewAction = createAsyncThunk<Review, SendReviewActionData, Extra>(
-  'reviews/send',
-  async ({ offerId, review }, { extra: api }) => {
-    const { data } = await api.post<Review>(
-      `${APIRoute.Reviews}/${offerId}`,
-      review
-    );
-    return data;
-  }
-);
+export const sendReviewAction = createAsyncThunk<
+  Review,
+  SendReviewActionData,
+  Extra
+>('reviews/send', async ({ offerId, review }, { extra: api }) => {
+  const { data } = await api.post<Review>(
+    `${APIRoute.Reviews}/${offerId}`,
+    review
+  );
+  return data;
+});
 
-export const fetchFavoritesAction = createAsyncThunk<OfferPreview[], undefined, Extra>(
-  'favorite/fetch',
-  async (_arg, {extra: api }) => {
-    const { data } = await api.get<OfferPreview[]>(`${APIRoute.Favorite}`);
+export const fetchFavoritesAction = createAsyncThunk<
+  OfferPreview[],
+  undefined,
+  Extra
+>('favorites/fetch', async (_arg, { extra: api }) => {
+  const { data } = await api.get<OfferPreview[]>(`${APIRoute.Favorite}`);
+  return data;
+});
+
+type ChangeFavoriteStatusData = {
+  offerId: Offer['id'];
+  status: FavoriteStatus;
+};
+
+export const changeFavoriteStatusAction = createAsyncThunk<
+  Offer,
+  ChangeFavoriteStatusData,
+  Extra
+>(
+  'favorites/update',
+  async ({ offerId, status }, { dispatch, getState, extra: api }) => {
+    const { data } = await api.post<Offer>(
+      `${APIRoute.Favorite}/${offerId}/${status}`
+    );
+
+    if (getState()[Namespace.Offer].offer?.id === offerId) {
+      dispatch(updateOffer(data));
+    }
+
+    if (status === FavoriteStatus.Unfavorite) {
+      dispatch(deleteFavorite(data));
+    }
+
     return data;
   }
 );

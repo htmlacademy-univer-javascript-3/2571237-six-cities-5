@@ -2,7 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 import { RequestStatus } from '../../constants/request-status';
 import { OffersData } from '../../types/app-state';
 import { Namespace } from '../../constants/store-namespace';
-import { fetchOffersAction } from '../api-actions';
+import { changeFavoriteStatusAction, fetchOffersAction } from '../api-actions';
+import { UpdateOfferPreviewItemInList } from '../../utils/offer-utils';
 
 const initialState: OffersData = {
   offers: [],
@@ -24,6 +25,9 @@ export const offersData = createSlice({
       })
       .addCase(fetchOffersAction.rejected, (state) => {
         state.offersFetchingStatus = RequestStatus.Error;
+      })
+      .addCase(changeFavoriteStatusAction.fulfilled, (state, action) => {
+        UpdateOfferPreviewItemInList(state.offers, action.payload);
       });
   },
 });

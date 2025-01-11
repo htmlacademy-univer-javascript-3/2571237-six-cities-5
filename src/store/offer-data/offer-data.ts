@@ -1,10 +1,9 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RequestStatus } from '../../constants/request-status';
 import { Namespace } from '../../constants/store-namespace';
-import {
-  fetchOfferAction,
-} from '../api-actions';
+import { fetchOfferAction } from '../api-actions';
 import { OfferData } from '../../types/app-state';
+import { Offer } from '../../types/offer/offer';
 
 const initialState: OfferData = {
   offer: null,
@@ -18,7 +17,10 @@ export const offerData = createSlice({
     dropOffer: (state) => {
       state.offer = null;
       state.offerFetchingStatus = RequestStatus.Idle;
-    }
+    },
+    updateOffer: (state, action: PayloadAction<Offer>) => {
+      state.offer = action.payload;
+    },
   },
   extraReducers(builder) {
     builder
@@ -35,4 +37,4 @@ export const offerData = createSlice({
   },
 });
 
-export const { dropOffer } = offerData.actions;
+export const { dropOffer, updateOffer } = offerData.actions;

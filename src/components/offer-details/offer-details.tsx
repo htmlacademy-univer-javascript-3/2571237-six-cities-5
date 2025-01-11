@@ -1,5 +1,10 @@
+import { ComponentProps } from 'react';
 import { AppBlock } from '../../constants/app-block';
-import { useAppSelector } from '../../hooks';
+import { AppRoute } from '../../constants/app-route';
+import { FavoriteStatus } from '../../constants/favorite-status';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { redirectToRoute } from '../../store/actions';
+import { changeFavoriteStatusAction } from '../../store/api-actions';
 import { isUserAuthorized } from '../../store/user-data/selectors';
 import { Offer } from '../../types/offer/offer';
 import BookmarkButton from '../bookmark-button/bookmark-button';
@@ -10,10 +15,9 @@ import ReviewsList from '../reviews-list/reviews-list';
 
 type OfferDetailsProps = {
   offer: Offer;
-}
+};
 
 export default function OfferDetails({ offer }: OfferDetailsProps) {
-
   const authorized = useAppSelector(isUserAuthorized);
 
   return (
@@ -28,6 +32,7 @@ export default function OfferDetails({ offer }: OfferDetailsProps) {
           <h1 className="offer__name">{offer.title}</h1>
           <BookmarkButton
             block={AppBlock.Offer}
+            offerId={offer.id}
             isActive={!!offer.isFavorite}
           />
         </div>

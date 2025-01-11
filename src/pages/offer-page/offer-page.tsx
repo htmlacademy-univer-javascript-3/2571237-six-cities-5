@@ -26,6 +26,7 @@ import { Map } from '../../components/map/map';
 import { getNearPlaces } from '../../store/near-places-data/selectors';
 import { ToMapPoint } from '../../utils/offer-utils';
 import OffersList from '../../components/offers-list/offers-list';
+import OfferCard from '../../components/offer-card/offer-card';
 
 const MAX_NEAR_PLACES_COUNT = 3;
 const MAX_OFFER_IMAGES_COUNT = 6;
@@ -93,7 +94,13 @@ export default function OfferPage() {
                 Other places in the neighbourhood
               </h2>
               <div className="near-places__list places__list">
-                <OffersList block={AppBlock.NearPlaces} offers={nearPlaces} />
+                {nearPlaces.map((offer) => (
+                  <OfferCard
+                    key={offer.id}
+                    block={AppBlock.NearPlaces}
+                    offer={offer}
+                  />
+                ))}
               </div>
             </section>
           </div>
