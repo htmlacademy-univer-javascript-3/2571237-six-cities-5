@@ -1,6 +1,9 @@
+import { memo } from 'react';
 import { AppBlock } from '../../constants/app-block';
 import { OfferPreview } from '../../types/offer/offer';
 import OfferCard from '../offer-card/offer-card';
+
+const MemoOfferCard = memo(OfferCard);
 
 function getOffersByCity(offers: OfferPreview[]) {
   return offers.reduce<{ [key: string]: OfferPreview[] }>((acc, offer) => {
@@ -38,7 +41,7 @@ export default function Favorites({ favoriteOffers }: FavoritesProps) {
                 </div>
                 <div className="favorites__places">
                   {favorites.map((offer) => (
-                    <OfferCard
+                    <MemoOfferCard
                       key={offer.id}
                       block={AppBlock.Favorites}
                       offer={offer}
