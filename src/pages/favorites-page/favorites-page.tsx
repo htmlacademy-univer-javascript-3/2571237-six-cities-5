@@ -12,7 +12,6 @@ import Spinner from '../../components/spinner/spinner';
 import { useEffect } from 'react';
 import { fetchFavoritesAction } from '../../store/api-actions';
 import { dropFavorites } from '../../store/favorites-data/favorites-data';
-import classNames from 'classnames';
 
 export default function FavoritesPage() {
   const favorites = useAppSelector(getFavorites);
@@ -35,22 +34,12 @@ export default function FavoritesPage() {
         <title>6 cities - favorites</title>
       </Helmet>
       {fetchingStatus === RequestStatus.Pending && <Spinner />}
-      {fetchingStatus === RequestStatus.Successful && (
-        <main
-          className={classNames(
-            'page__main page__main--favorites',
-            favoirtesEmpty && 'page__main--favorites-empty'
-          )}
-        >
-          <div className="page__favorites-container container">
-            (FavoritesEmpty ? (
-            <FavoritesEmpty />
-            ) : (
-            <Favorites favoriteOffers={favorites} />
-            ))
-          </div>
-        </main>
-      )}
+      {fetchingStatus === RequestStatus.Successful &&
+        (favoirtesEmpty ? (
+          <FavoritesEmpty />
+        ) : (
+          <Favorites favoriteOffers={favorites} />
+        ))}
       <Footer />
     </div>
   );

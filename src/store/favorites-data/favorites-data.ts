@@ -1,8 +1,9 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RequestStatus } from '../../constants/request-status';
 import { FavoritesData } from '../../types/app-state';
 import { Namespace } from '../../constants/store-namespace';
 import { fetchFavoritesAction } from '../api-actions';
+import { OfferPreview } from '../../types/offer/offer';
 
 const initialState: FavoritesData = {
   favorites: [],
@@ -17,6 +18,11 @@ export const favoritesData = createSlice({
       state.favorites = [];
       state.favoritesFetchingStatus = RequestStatus.Idle;
     },
+    deleteFavorite: (state, action: PayloadAction<OfferPreview>) => {
+      state.favorites = state.favorites.filter(
+        (offer) => offer.id !== action.payload.id
+      );
+    },
   },
   extraReducers(builder) {
     builder
@@ -30,4 +36,4 @@ export const favoritesData = createSlice({
   },
 });
 
-export const { dropFavorites } = favoritesData.actions;
+export const { dropFavorites, deleteFavorite } = favoritesData.actions;

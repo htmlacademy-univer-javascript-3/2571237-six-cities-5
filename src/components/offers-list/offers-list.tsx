@@ -4,7 +4,7 @@ import { ComponentProps } from 'react';
 
 type OffersListProps = Pick<
   ComponentProps<typeof OfferCard>,
-  'block' | 'onCardHovered'
+  'block' | 'onCardHovered' | 'onCardMouseLeft'
 > & {
   offers: OfferPreview[];
 };

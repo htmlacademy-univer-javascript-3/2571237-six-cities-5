@@ -1,8 +1,12 @@
+import { useCallback } from 'react';
 import { AppBlock } from '../../constants/app-block';
 import { useAppDispatch } from '../../hooks';
 import { OfferPreview } from '../../types/offer/offer';
 import OffersList from '../offers-list/offers-list';
-import { setMapSelectedPointId } from '../../store/map-data/map-data';
+import {
+  dropMapSelectedPointId,
+  setMapSelectedPointId,
+} from '../../store/map-data/map-data';
 
 type CitiesProps = {
   cityOffers: OfferPreview[];
@@ -11,6 +15,16 @@ type CitiesProps = {
 export default function Cities({ cityOffers }: CitiesProps) {
   const city = cityOffers[0].city;
   const dispatch = useAppDispatch();
+
+  const onOfferCardHoveredHandler = useCallback(
+    (offerId: OfferPreview['id']) => dispatch(setMapSelectedPointId(offerId)),
+    [dispatch]
+  );
+
+  const onOfferCardMouseLeftHandler = useCallback(
+    () => dispatch(dropMapSelectedPointId()),
+    [dispatch]
+  );
 
   return (
     <section className="cities__places places">
@@ -45,7 +59,8 @@ export default function Cities({ cityOffers }: CitiesProps) {
         <OffersList
           block={AppBlock.Cities}
           offers={cityOffers}
-          onCardHovered={(offerId) => dispatch(setMapSelectedPointId(offerId))}
+          onCardHovered={onOfferCardHoveredHandler}
+          onCardMouseLeft={onOfferCardMouseLeftHandler}
         />
       </div>
     </section>

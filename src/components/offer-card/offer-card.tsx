@@ -5,37 +5,44 @@ import { Link } from 'react-router-dom';
 import BookmarkButton from '../bookmark-button/bookmark-button';
 import Rating from '../rating/rating';
 import { AppBlock } from '../../constants/app-block';
+import { MouseEventHandler } from 'react';
 
 type ImageSize = {
   width: number;
   height: number;
 };
 
-type OfferCardBlock = AppBlock.Cities | AppBlock.NearPlaces | AppBlock.Favorites;
+type OfferCardBlock =
+  | AppBlock.Cities
+  | AppBlock.NearPlaces
+  | AppBlock.Favorites;
 
 const offerPreviewImageSizes: Record<OfferCardBlock, ImageSize> = {
-  [AppBlock.Cities]: {width: 260, height: 200},
-  [AppBlock.NearPlaces]: {width: 260, height: 200},
-  [AppBlock.Favorites]: {width: 150, height: 110}
+  [AppBlock.Cities]: { width: 260, height: 200 },
+  [AppBlock.NearPlaces]: { width: 260, height: 200 },
+  [AppBlock.Favorites]: { width: 150, height: 110 },
 };
 
-type OnOfferCardHoveredHandler = (offerId: OfferPreview['id']) => void;
+type onOfferCardHoveredHandler = (offerId: OfferPreview['id']) => void;
 
 type OfferCardProps = {
   block: OfferCardBlock;
   offer: OfferPreview;
-  onCardHovered?: OnOfferCardHoveredHandler;
+  onCardHovered?: onOfferCardHoveredHandler;
+  onCardMouseLeft?: MouseEventHandler<HTMLElement>;
 };
 
 export default function OfferCard({
   block,
   offer,
   onCardHovered,
+  onCardMouseLeft,
 }: OfferCardProps) {
   return (
     <article
-      onMouseEnter={() => onCardHovered?.(offer.id)}
       className={classNames('place-card', `${block}__card`)}
+      onMouseEnter={() => onCardHovered?.(offer.id)}
+      onMouseLeave={onCardMouseLeft}
     >
       {offer.isPremium && (
         <div className="place-card__mark">
@@ -63,7 +70,11 @@ export default function OfferCard({
             <b className="place-card__price-value">&euro;{offer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <BookmarkButton block={AppBlock.OfferCard} isActive={!!offer.isFavorite} />
+          <BookmarkButton
+            block={AppBlock.OfferCard}
+            offerId={offer.id}
+            isActive={!!offer.isFavorite}
+          />
         </div>
         <div className="place-card__rating rating">
           <Rating block={AppBlock.OfferCard} rating={offer.rating} />
