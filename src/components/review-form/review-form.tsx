@@ -33,7 +33,7 @@ function validateReview({ comment, rating }: ReviewFormData) {
   return (
     comment.length >= MIN_COMMENT_LENGTH &&
     comment.length <= MAX_COMMENT_LENGTH &&
-    !Number.isNaN(rating)
+    rating !== defaultFormData.rating
   );
 }
 
