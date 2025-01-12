@@ -8,18 +8,9 @@ import { isUserAuthorized } from '../../store/user-data/selectors';
 import { changeFavoriteStatusAction } from '../../store/api-actions';
 import { Offer } from '../../types/offer/offer';
 import { FavoriteStatus } from '../../constants/favorite-status';
+import { iconSize } from './bookmark-icon-size';
 
 type BookmarkButtonBlock = AppBlock.OfferCard | AppBlock.Offer;
-
-type IconSize = {
-  width: number;
-  height: number;
-};
-
-const iconSize: Record<BookmarkButtonBlock, IconSize> = {
-  [AppBlock.OfferCard]: { width: 18, height: 19 },
-  [AppBlock.Offer]: { width: 31, height: 33 },
-};
 
 type BookmarkButtonProps = {
   block: BookmarkButtonBlock;
@@ -35,7 +26,7 @@ export default function BookmarkButton({
   const authorized = useAppSelector(isUserAuthorized);
   const dispatch = useAppDispatch();
 
-  const onBookmarkClickHandler: MouseEventHandler<HTMLButtonElement> = (
+  const handleBookmarkClick: MouseEventHandler<HTMLButtonElement> = (
     evt
   ) => {
     evt.preventDefault();
@@ -57,7 +48,7 @@ export default function BookmarkButton({
         isActive && `${block}__bookmark-button--active`,
         'button'
       )}
-      onClick={onBookmarkClickHandler}
+      onClick={handleBookmarkClick}
       type="button"
     >
       <svg className={`${block}__bookmark-icon`} {...iconSize[block]}>

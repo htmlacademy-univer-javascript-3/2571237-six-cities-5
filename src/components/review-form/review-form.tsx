@@ -17,6 +17,8 @@ import { RatingStarInput } from './rating-star-input';
 const MIN_COMMENT_LENGTH = 50;
 const MAX_COMMENT_LENGTH = 300;
 
+const ratingStars = Array.from({ length: 5 }, (_, i) => String(5 - i));
+
 type ReviewFormData = {
   comment: string;
   rating: string;
@@ -26,8 +28,6 @@ const defaultFormData: ReviewFormData = {
   comment: '',
   rating: '',
 };
-
-const ratingStars = Array.from({ length: 5 }, (_, i) => String(5 - i));
 
 function validateReview({ comment, rating }: ReviewFormData) {
   return (
@@ -68,6 +68,9 @@ export default function ReviewForm() {
   useEffect(() => {
     if (sendingStatus === RequestStatus.Successful) {
       setFormData(defaultFormData);
+      dispatch(dropReviewSendingStatus());
+    }
+    if (sendingStatus === RequestStatus.Error){
       dispatch(dropReviewSendingStatus());
     }
   }, [sendingStatus, dispatch]);

@@ -12,6 +12,7 @@ import Spinner from '../../components/spinner/spinner';
 import { useEffect } from 'react';
 import { fetchFavoritesAction } from '../../store/api-actions';
 import { dropFavorites } from '../../store/favorites-data/favorites-data';
+import classNames from 'classnames';
 
 export default function FavoritesPage() {
   const favorites = useAppSelector(getFavorites);
@@ -29,7 +30,7 @@ export default function FavoritesPage() {
   }, [dispatch]);
 
   return (
-    <div className="page">
+    <div className={classNames('page', favoirtesEmpty && 'page--favorites-empty')}>
       <Helmet>
         <title>6 cities - favorites</title>
       </Helmet>

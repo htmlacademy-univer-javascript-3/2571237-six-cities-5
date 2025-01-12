@@ -22,7 +22,7 @@ export default function MainPage() {
   const cityOffersEmpty = cityOffers.length === 0;
   const dispatch = useAppDispatch();
 
-  const handleOnCityClick = useCallback<
+  const handleCityClick = useCallback<
     ComponentProps<typeof MemoLocations>['onCityClick']
   >((city) => dispatch(setActiveCity(city)), [dispatch]);
 
@@ -49,7 +49,7 @@ export default function MainPage() {
         <div className="tabs">
           <MemoLocations
             activeCity={activeCity}
-            onCityClick={handleOnCityClick}
+            onCityClick={handleCityClick}
           />
         </div>
         <div className="cities">

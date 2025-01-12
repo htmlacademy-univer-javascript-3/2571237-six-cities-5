@@ -15,7 +15,7 @@ export default function LoginPage() {
   const randomCity = getRandomItem(cities);
   const dispatch = useAppDispatch();
 
-  const handleOnLocationClick: MouseEventHandler<HTMLAnchorElement> = () => {
+  const handleLocationClick: MouseEventHandler<HTMLAnchorElement> = () => {
     dispatch(setActiveCity(randomCity));
   };
 
@@ -31,7 +31,7 @@ export default function LoginPage() {
           <LoginForm />
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <Link className="locations__item-link" to={AppRoute.Main} onClick={handleOnLocationClick}>
+              <Link className="locations__item-link" to={AppRoute.Main} onClick={handleLocationClick}>
                 <span>{randomCity}</span>
               </Link>
             </div>

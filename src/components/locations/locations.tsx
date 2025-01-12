@@ -1,7 +1,7 @@
 import { CityName } from '../../constants/city-name';
 import classNames from 'classnames';
 
-const locations: CityName[] = Object.values(CityName);
+const locations = Object.values(CityName);
 
 type LocationsProps = {
   activeCity: CityName;

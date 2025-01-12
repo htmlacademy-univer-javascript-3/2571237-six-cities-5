@@ -16,3 +16,20 @@ export function UpdateOfferPreviewItemInList(offers: OfferPreview[], updatedOffe
 export function getOffersByCity(offers: OfferPreview[], city: CityName) {
   return offers.filter((offer) => offer.city.name === city);
 }
+
+export function getOffersByCityMap(offers: OfferPreview[]) {
+  return offers.reduce<{ [key: string]: OfferPreview[] }>((acc, offer) => {
+    const city = offer.city.name;
+    if (!(city in acc)) {
+      acc[city] = [];
+    }
+
+    acc[city].push(offer);
+
+    return acc;
+  }, {});
+}
+
+export function convertRatingToWidthInPercent(rating: number){
+  return Math.round(rating) * 20;
+}

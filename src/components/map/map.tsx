@@ -2,23 +2,12 @@ import 'leaflet/dist/leaflet.css';
 import { useEffect, useRef } from 'react';
 import { City } from '../../types/offer/city';
 import useMap from '../../hooks/use-map';
-import leaflet, { layerGroup, Marker } from 'leaflet';
+import { layerGroup, Marker } from 'leaflet';
 import { MapPoint } from '../../types/map-point';
 import { useAppSelector } from '../../hooks';
 import { getMapSelectedPointId } from '../../store/map-data/selectors';
 import { AppBlock } from '../../constants/app-block';
-
-const defaultIcon = leaflet.icon({
-  iconUrl: '../../../markup/img/pin.svg',
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
-});
-
-const activeIcon = leaflet.icon({
-  iconUrl: '../../../markup/img/pin-active.svg',
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
-});
+import { activeIcon, defaultIcon } from './map-icon';
 
 type MapBlock = AppBlock.Cities | AppBlock.Offer;
 
