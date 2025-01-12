@@ -1,4 +1,4 @@
-import { toast } from "react-toastify";
+import { toast } from 'react-toastify';
 
 export function validatePassword(password: string) {
   if (/\s/.test(password)){

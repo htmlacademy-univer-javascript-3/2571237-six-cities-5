@@ -3,8 +3,8 @@ import { AppRoute } from '../../constants/app-route';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { logoutAction } from '../../store/api-actions';
 import { MouseEventHandler } from 'react';
-import { getFavoritesCount } from '../../store/offers-data/selectors';
 import { getUserName } from '../../store/user-data/selectors';
+import { getFavoritesCount } from '../../store/favorites-data/selectors';
 
 export default function AuthorizedHeaderNav() {
   const favoritesCount = useAppSelector(getFavoritesCount);

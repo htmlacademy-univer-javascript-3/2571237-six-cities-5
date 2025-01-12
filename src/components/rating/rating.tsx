@@ -15,7 +15,7 @@ export default function Rating({ block, rating, children }: RatingProps) {
       <div className={`${block}__stars rating__stars`}>
         <span
           style={{ width: `${convertRatingToWidthInPercent(rating)}%` }}
-        ></span>
+        />
         <span className="visually-hidden">Rating</span>
       </div>
       {children}
