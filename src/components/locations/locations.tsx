@@ -5,12 +5,12 @@ const locations: CityName[] = Object.values(CityName);
 
 type LocationsProps = {
   activeCity: CityName;
-  setActiveCity: (city: CityName) => void;
+  onCityClick: (city: CityName) => void;
 };
 
 export default function Locations({
   activeCity,
-  setActiveCity,
+  onCityClick,
 }: LocationsProps) {
   return (
     <section className="locations container">
@@ -26,7 +26,7 @@ export default function Locations({
               href="#"
               onClick={(evt) => {
                 evt.preventDefault();
-                setActiveCity(city);
+                onCityClick(city);
               }}
             >
               <span>{city}</span>

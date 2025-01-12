@@ -5,14 +5,14 @@ type SortingProps<TOption extends string> = {
   sortingOptions: TOption[];
   activeOption: TOption;
   optionLabels: Record<TOption, string>;
-  onChange: (option: TOption) => void;
+  onOptionChanged: (option: TOption) => void;
 };
 
 export default function Sorting<TOption extends string>({
   sortingOptions,
   activeOption,
   optionLabels,
-  onChange,
+  onOptionChanged,
 }: SortingProps<TOption>) {
   const [isOpened, setIsOpened] = useState(false);
 
@@ -26,7 +26,7 @@ export default function Sorting<TOption extends string>({
       return;
     }
 
-    onChange(option);
+    onOptionChanged(option);
   };
 
   return (

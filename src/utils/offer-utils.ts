@@ -1,3 +1,4 @@
+import { CityName } from '../constants/city-name';
 import { MapPoint } from '../types/map-point';
 import { OfferPreview } from '../types/offer/offer';
 
@@ -10,4 +11,8 @@ export function UpdateOfferPreviewItemInList(offers: OfferPreview[], updatedOffe
   if (index !== -1){
     offers[index] = updatedOffer;
   }
+}
+
+export function getOffersByCity(offers: OfferPreview[], city: CityName) {
+  return offers.filter((offer) => offer.city.name === city);
 }

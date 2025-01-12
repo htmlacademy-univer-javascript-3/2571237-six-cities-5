@@ -44,7 +44,7 @@ export default function Cities({ cityOffers }: CitiesProps) {
         sortingOptions={offersSortingOptions}
         activeOption={sortingOption}
         optionLabels={sortingOptionLabels}
-        onChange={setSortingOption}
+        onOptionChanged={setSortingOption}
       />
       <div className="cities__places-list places__list tabs__content">
         <OffersList
