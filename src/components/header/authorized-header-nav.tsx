@@ -3,17 +3,11 @@ import { AppRoute } from '../../constants/app-route';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { logoutAction } from '../../store/api-actions';
 import { MouseEventHandler } from 'react';
-import { OfferPreview } from '../../types/offer/offer';
-import { getOffers } from '../../store/offers-data/selectors';
 import { getUserName } from '../../store/user-data/selectors';
-
-function getFavoriteCount(offers: OfferPreview[]) {
-  return offers.filter((offer) => offer.isFavorite).length;
-}
+import { getFavoritesCount } from '../../store/favorites-data/selectors';
 
 export default function AuthorizedHeaderNav() {
-  const offers = useAppSelector(getOffers);
-  const favoriteCount = getFavoriteCount(offers);
+  const favoritesCount = useAppSelector(getFavoritesCount);
   const userName = useAppSelector(getUserName);
   const dispatch = useAppDispatch();
 
@@ -31,20 +25,14 @@ export default function AuthorizedHeaderNav() {
             className="header__nav-link header__nav-link--profile"
           >
             <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-            <span className="header__user-name user__name">
-              {userName}
-            </span>
-            <span className="header__favorite-count">{favoriteCount}</span>
+            <span className="header__user-name user__name">{userName}</span>
+            <span className="header__favorite-count">{favoritesCount}</span>
           </Link>
         </li>
         <li className="header__nav-item">
-          <Link
-            className="header__nav-link"
-            onClick={handleSignOut}
-            to={AppRoute.Main}
-          >
+          <a className="header__nav-link" onClick={handleSignOut}>
             <span className="header__signout">Sign out</span>
-          </Link>
+          </a>
         </li>
       </ul>
     </nav>

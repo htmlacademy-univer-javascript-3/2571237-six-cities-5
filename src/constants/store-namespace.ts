@@ -6,4 +6,5 @@ export enum Namespace {
   NearPlaces = 'NEAR_PLACES',
   Map = 'MAP',
   Favorite = 'FAVORITE',
+  Cities = 'CITIES',
 }

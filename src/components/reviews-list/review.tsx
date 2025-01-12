@@ -2,15 +2,7 @@ import { AppBlock } from '../../constants/app-block';
 import { type Review } from '../../types/review';
 import Rating from '../rating/rating';
 import User from '../user/user';
-
-const displayedformatOptions: Intl.DateTimeFormatOptions = {
-  month: 'long',
-  year: 'numeric',
-};
-
-function getDisplayedFormatedDate(date: string) {
-  return new Date(date).toLocaleDateString('en-us', displayedformatOptions);
-}
+import { getDisplayedFormatedDate } from './review-date';
 
 type ReviewProps = {
   review: Review;

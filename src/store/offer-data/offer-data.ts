@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RequestStatus } from '../../constants/request-status';
 import { Namespace } from '../../constants/store-namespace';
-import { fetchOfferAction } from '../api-actions';
+import { changeFavoriteStatusAction, fetchOfferAction } from '../api-actions';
 import { OfferData } from '../../types/app-state';
 import { Offer } from '../../types/offer/offer';
 
@@ -33,6 +33,11 @@ export const offerData = createSlice({
       })
       .addCase(fetchOfferAction.rejected, (state) => {
         state.offerFetchingStatus = RequestStatus.Error;
+      })
+      .addCase(changeFavoriteStatusAction.fulfilled, (state, action) => {
+        if (state.offer?.id === action.payload.id) {
+          state.offer = action.payload;
+        }
       });
   },
 });

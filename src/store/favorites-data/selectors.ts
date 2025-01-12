@@ -6,3 +6,6 @@ export const getFavorites = (state: State) =>
 
 export const getFavoriteFetchingStatus = (state: State) =>
   state[Namespace.Favorite].favoritesFetchingStatus;
+
+export const getFavoritesCount = (state: State) =>
+  state[Namespace.Favorite].favorites.length;

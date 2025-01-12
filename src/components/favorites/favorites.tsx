@@ -1,29 +1,15 @@
-import { memo } from 'react';
 import { AppBlock } from '../../constants/app-block';
 import { OfferPreview } from '../../types/offer/offer';
-import OfferCard from '../offer-card/offer-card';
-
-const MemoOfferCard = memo(OfferCard);
-
-function getOffersByCity(offers: OfferPreview[]) {
-  return offers.reduce<{ [key: string]: OfferPreview[] }>((acc, offer) => {
-    const city = offer.city.name;
-    if (!(city in acc)) {
-      acc[city] = [];
-    }
-
-    acc[city].push(offer);
-
-    return acc;
-  }, {});
-}
+import { getOffersByCityMap } from '../../utils/offer-utils';
+import OffersList from '../offers-list/offers-list';
 
 type FavoritesProps = {
   favoriteOffers: OfferPreview[];
 };
 
 export default function Favorites({ favoriteOffers }: FavoritesProps) {
-  const favoriteOffersByCity = getOffersByCity(favoriteOffers);
+  const favoriteOffersByCity = getOffersByCityMap(favoriteOffers);
+
   return (
     <main className="page__main page__main--favorites">
       <div className="page__favorites-container container">
@@ -40,13 +26,7 @@ export default function Favorites({ favoriteOffers }: FavoritesProps) {
                   </div>
                 </div>
                 <div className="favorites__places">
-                  {favorites.map((offer) => (
-                    <MemoOfferCard
-                      key={offer.id}
-                      block={AppBlock.Favorites}
-                      offer={offer}
-                    />
-                  ))}
+                  <OffersList block={AppBlock.Favorites} offers={favorites} />
                 </div>
               </li>
             ))}

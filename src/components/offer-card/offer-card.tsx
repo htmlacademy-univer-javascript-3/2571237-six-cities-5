@@ -6,22 +6,12 @@ import BookmarkButton from '../bookmark-button/bookmark-button';
 import Rating from '../rating/rating';
 import { AppBlock } from '../../constants/app-block';
 import { MouseEventHandler } from 'react';
-
-type ImageSize = {
-  width: number;
-  height: number;
-};
+import { offerPreviewImageSizes } from './offer-image-size';
 
 type OfferCardBlock =
   | AppBlock.Cities
   | AppBlock.NearPlaces
   | AppBlock.Favorites;
-
-const offerPreviewImageSizes: Record<OfferCardBlock, ImageSize> = {
-  [AppBlock.Cities]: { width: 260, height: 200 },
-  [AppBlock.NearPlaces]: { width: 260, height: 200 },
-  [AppBlock.Favorites]: { width: 150, height: 110 },
-};
 
 type onOfferCardHoveredHandler = (offerId: OfferPreview['id']) => void;
 

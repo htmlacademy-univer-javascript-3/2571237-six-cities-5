@@ -10,9 +10,7 @@ import { Review, ReviewFormSentData, Reviews } from '../types/review';
 import { AuthorizedUser } from '../types/authorization/authorized-user';
 import { FavoriteStatus } from '../constants/favorite-status';
 import { AppDispatch, State } from '../types/app-state';
-import { Namespace } from '../constants/store-namespace';
-import { updateOffer } from './offer-data/offer-data';
-import { deleteFavorite } from './favorites-data/favorites-data';
+import { dropFavorites } from './favorites-data/favorites-data';
 
 type Extra = {
   dispatch: AppDispatch;
@@ -91,31 +89,20 @@ export const changeFavoriteStatusAction = createAsyncThunk<
   Offer,
   ChangeFavoriteStatusData,
   Extra
->(
-  'favorites/update',
-  async ({ offerId, status }, { dispatch, getState, extra: api }) => {
-    const { data } = await api.post<Offer>(
-      `${APIRoute.Favorite}/${offerId}/${status}`
-    );
-
-    if (getState()[Namespace.Offer].offer?.id === offerId) {
-      dispatch(updateOffer(data));
-    }
-
-    if (status === FavoriteStatus.Unfavorite) {
-      dispatch(deleteFavorite(data));
-    }
-
-    return data;
-  }
-);
+>('favorites/update', async ({ offerId, status }, { extra: api }) => {
+  const { data } = await api.post<Offer>(
+    `${APIRoute.Favorite}/${offerId}/${status}`
+  );
+  return data;
+});
 
 export const checkAuthAction = createAsyncThunk<
   AuthorizedUser,
   undefined,
   Extra
->('user/checkAuth', async (_arg, { extra: api }) => {
+>('user/checkAuth', async (_arg, { dispatch, extra: api }) => {
   const { data } = await api.get<AuthorizedUser>(APIRoute.Login);
+  dispatch(fetchFavoritesAction());
   return data;
 });
 
@@ -127,6 +114,7 @@ export const loginAction = createAsyncThunk<AuthorizedUser, AuthData, Extra>(
       password,
     });
     saveToken(data.token);
+    dispatch(fetchFavoritesAction());
     dispatch(redirectToRoute(AppRoute.Main));
     return data;
   }
@@ -134,8 +122,9 @@ export const loginAction = createAsyncThunk<AuthorizedUser, AuthData, Extra>(
 
 export const logoutAction = createAsyncThunk<void, undefined, Extra>(
   'user/logout',
-  async (_arg, { extra: api }) => {
+  async (_arg, { dispatch, extra: api }) => {
     await api.delete(APIRoute.Logout);
+    dispatch(dropFavorites());
     dropToken();
   }
 );

@@ -9,7 +9,11 @@ import {
 } from '../../store/map-data/map-data';
 import Sorting from '../sorting/sorting';
 import { OffersSortingOption } from '../../constants/offers-sorting-option';
-import { offersSortingOptions, offersSortings, sortingOptionLabels } from './offers-sorting';
+import {
+  offersSortingOptions,
+  offersSortings,
+  sortingOptionLabels,
+} from './offers-sorting';
 
 type CitiesProps = {
   cityOffers: OfferPreview[];
@@ -24,12 +28,12 @@ export default function Cities({ cityOffers }: CitiesProps) {
   const city = cityOffers[0].city;
   const dispatch = useAppDispatch();
 
-  const onOfferCardHoveredHandler = useCallback(
+  const handleOfferCardHovered = useCallback(
     (offerId: OfferPreview['id']) => dispatch(setMapSelectedPointId(offerId)),
     [dispatch]
   );
 
-  const onOfferCardMouseLeftHandler = useCallback(
+  const handleOfferCardMouseLeft = useCallback(
     () => dispatch(dropMapSelectedPointId()),
     [dispatch]
   );
@@ -44,14 +48,14 @@ export default function Cities({ cityOffers }: CitiesProps) {
         sortingOptions={offersSortingOptions}
         activeOption={sortingOption}
         optionLabels={sortingOptionLabels}
-        onChange={setSortingOption}
+        onOptionChanged={setSortingOption}
       />
       <div className="cities__places-list places__list tabs__content">
         <OffersList
           block={AppBlock.Cities}
           offers={cityOffers}
-          onCardHovered={onOfferCardHoveredHandler}
-          onCardMouseLeft={onOfferCardMouseLeftHandler}
+          onCardHovered={handleOfferCardHovered}
+          onCardMouseLeft={handleOfferCardMouseLeft}
         />
       </div>
     </section>

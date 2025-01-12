@@ -1,4 +1,5 @@
 import { AuthorizationStatus } from '../constants/authorization-status';
+import { CityName } from '../constants/city-name';
 import { RequestStatus } from '../constants/request-status';
 import { store } from '../store';
 import { AuthorizedUser } from './authorization/authorized-user';
@@ -41,4 +42,8 @@ export type MapData = {
 export type FavoritesData = {
   favorites: OfferPreview[];
   favoritesFetchingStatus: RequestStatus;
+}
+
+export type CitiesData = {
+  activeCity: CityName;
 }
