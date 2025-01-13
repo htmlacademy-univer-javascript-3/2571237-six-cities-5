@@ -58,7 +58,8 @@ export default function ReviewForm() {
       comment: formData.comment,
       rating: +formData.rating,
     };
-    dispatch(sendReviewAction({ offerId, review }));
+    dispatch(sendReviewAction({ offerId, review }))
+      .then(() => setFormData(defaultFormData));
   };
 
   const reviewValid = validateReview(formData);
@@ -66,11 +67,7 @@ export default function ReviewForm() {
   const isSending = sendingStatus === RequestStatus.Pending;
 
   useEffect(() => {
-    if (sendingStatus === RequestStatus.Successful) {
-      setFormData(defaultFormData);
-      dispatch(dropReviewSendingStatus());
-    }
-    if (sendingStatus === RequestStatus.Error){
+    if (sendingStatus === RequestStatus.Successful || sendingStatus === RequestStatus.Error) {
       dispatch(dropReviewSendingStatus());
     }
   }, [sendingStatus, dispatch]);
